@@ -1,0 +1,18 @@
+/* Kayıt sayfası giriş ekranıyla aynı dili kullanır, uzun formu rahatlatır. */
+.auth-page { max-width: 1160px; padding-top: 48px; padding-bottom: 56px; }
+.register-layout { grid-template-columns: minmax(0, .9fr) minmax(440px, 1fr); }
+.register-layout .auth-story img { height: 310px; }
+.register-panel { max-width: 560px; justify-self: end; padding: clamp(24px, 3vw, 34px); }
+.register-panel .auth-description { margin-bottom: 17px; }
+.register-panel .auth-form { gap: 6px; }
+.register-panel .auth-form label { margin-top: 5px; }
+.register-panel .auth-form input { min-height: 47px; }
+.password-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 3px; }
+.password-fields > div { min-width: 0; display: grid; gap: 6px; }
+.password-fields label { line-height: 1.4; }
+.password-fields label span { display: block; color: var(--muted); font-size: .78rem; font-weight: 400; }
+.register-panel .auth-form .button { margin-top: 14px; }
+.register-panel .auth-switch { margin-top: 17px; }
+@media (max-width: 800px) { .register-layout { grid-template-columns: minmax(0, .85fr) minmax(390px, 1fr); gap: 23px; } .register-layout .auth-story img { height: 245px; } }
+@media (max-width: 680px) { .auth-page { padding-top: 30px; } .register-layout { grid-template-columns: 1fr; gap: 22px; } .register-layout .auth-story img { height: 185px; } .register-panel { max-width: none; } }
+@media (max-width: 440px) { .password-fields { grid-template-columns: 1fr; gap: 6px; } }

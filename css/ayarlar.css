@@ -1,0 +1,50 @@
+/* Ayarlar sayfası görünüm tercihlerini ve ilgili kısayolları ayırır. */
+.settings-page { max-width: 1120px; padding-top: 44px; padding-bottom: 60px; }
+.settings-heading { min-height: 160px; display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-bottom: 30px; padding: 27px 34px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.settings-heading .eyebrow { margin-bottom: 5px; }
+.settings-heading h1 { margin-bottom: 6px; font-size: clamp(2rem, 3vw, 2.7rem); }
+.settings-heading p:last-child { margin: 0; color: var(--muted); }
+.settings-mark { width: 84px; height: 84px; display: grid; place-items: center; flex: 0 0 84px; border: 1px solid var(--control-border); border-radius: 50%; color: var(--button); font-size: 1.1rem; font-weight: 800; letter-spacing: .09em; }
+.settings-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .7fr); gap: clamp(30px, 6vw, 76px); align-items: start; }
+.settings-main { min-width: 0; }
+.settings-card { padding: 26px 0 23px; border-bottom: 1px solid var(--line); }
+.settings-card-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 11px; }
+.settings-icon { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--control-border); border-radius: 50%; color: var(--heading); font-size: 1.4rem; }
+.settings-card-heading .eyebrow { margin-bottom: 2px; }
+.settings-card-heading h2 { margin: 0; font-size: 1.35rem; }
+.settings-description { max-width: 650px; margin: 0 0 20px 56px; color: var(--muted); }
+.theme-choice { min-height: 86px; display: flex; align-items: center; gap: 16px; margin-left: 56px; padding: 14px 17px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
+.theme-preview { width: 68px; height: 46px; display: flex; flex: 0 0 68px; overflow: hidden; border: 1px solid var(--control-border); border-radius: 3px; background: #F7F3EB; }
+.theme-preview span:nth-child(1) { width: 32%; background: #49372B; }
+.theme-preview span:nth-child(2) { width: 25%; background: #795C46; }
+.theme-preview span:nth-child(3) { width: 23%; background: #E8DDCC; }
+.theme-preview span:nth-child(4) { flex: 1; background: #F7F3EB; }
+.theme-choice-copy { display: grid; flex: 1; gap: 2px; }
+.theme-choice-copy strong { color: var(--heading); }
+.theme-choice-copy small { color: var(--muted); font-size: .82rem; }
+.theme-switch { position: relative; width: 48px; height: 28px; flex: 0 0 48px; cursor: pointer; }
+.theme-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.switch-track { position: absolute; inset: 0; border: 1px solid var(--control-border); border-radius: 20px; background: var(--page-bg); transition: background-color .16s ease; }
+.switch-track::after { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--button); content: ""; transition: transform .16s ease; }
+.theme-switch input:checked + .switch-track { background: var(--heading); }
+.theme-switch input:checked + .switch-track::after { transform: translateX(20px); background: var(--page-bg); }
+.theme-switch input:focus-visible + .switch-track { outline: 2px solid var(--heading); outline-offset: 3px; }
+.theme-status { min-height: 1.4em; margin: 10px 0 0 56px; color: var(--muted); font-size: .84rem; }
+.settings-note { display: grid; grid-template-columns: 42px 1fr; gap: 14px; padding: 24px 0; }
+.settings-note-number { color: var(--button); font-size: .82rem; font-weight: 700; letter-spacing: .08em; }
+.settings-note h2 { margin: 0 0 5px; font-size: 1.12rem; }
+.settings-note p { max-width: 650px; margin: 0; color: var(--muted); font-size: .93rem; }
+.settings-links { padding: 23px 22px; border-top: 3px solid var(--button); background: var(--surface); }
+.settings-links .eyebrow { margin-bottom: 4px; }
+.settings-links h2 { margin: 0 0 5px; font-size: 1.32rem; }
+.settings-links > p:not(.eyebrow) { margin: 0 0 13px; color: var(--muted); font-size: .9rem; }
+.settings-links a { min-height: 61px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; border-top: 1px solid var(--line); color: var(--heading); text-decoration: none; }
+.settings-links a > span:first-child { display: grid; gap: 1px; }
+.settings-links a small { color: var(--muted); font-size: .73rem; }
+.settings-links a strong { font-size: .92rem; }
+.settings-links a > span:last-child { color: var(--button); font-size: 1.25rem; transition: transform .15s ease; }
+.settings-links a:hover > span:last-child { transform: translateX(3px); }
+.settings-links a:focus-visible { outline: 2px solid var(--button); outline-offset: 2px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (max-width: 760px) { .settings-page { padding-top: 28px; } .settings-heading { min-height: 135px; padding: 23px 21px; } .settings-mark { width: 64px; height: 64px; flex-basis: 64px; } .settings-layout { grid-template-columns: 1fr; gap: 25px; } .settings-links { padding: 21px; } }
+@media (max-width: 480px) { .settings-heading { gap: 10px; } .settings-mark { width: 52px; height: 52px; flex-basis: 52px; font-size: .9rem; } .settings-description, .theme-choice, .theme-status { margin-left: 0; } .theme-choice { gap: 10px; padding: 12px 10px; } .theme-preview { width: 50px; flex-basis: 50px; height: 38px; } .theme-choice-copy small { max-width: 150px; line-height: 1.35; } .settings-card-heading { margin-bottom: 13px; } }

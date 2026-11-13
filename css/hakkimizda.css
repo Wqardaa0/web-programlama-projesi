@@ -1,0 +1,55 @@
+/* Hakkımızda sayfasında hikâye, görsel ve marka yaklaşımı */
+.about-page { max-width: 1180px; }
+.about-page > .page-intro { max-width: 840px; margin-bottom: 30px; }
+.about-page > .page-intro p:last-child { font-size: 1.04rem; }
+.about-section { display: grid; grid-template-columns: 1.12fr .88fr; gap: 0; align-items: stretch; }
+.about-section > img { width: 100%; min-height: 410px; max-height: 510px; display: block; padding: 10px; border-radius: 9px; object-fit: cover; background: var(--surface); }
+.about-section > div { align-self: stretch; padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; justify-content: center; border-top: 3px solid var(--button); border-radius: 0 7px 7px 0; background: var(--surface); }
+.about-section h2 { max-width: 420px; margin-bottom: 16px; font-size: clamp(1.7rem, 2.6vw, 2.35rem); }
+.about-section p:not(.eyebrow) { max-width: 490px; margin: 0 0 14px; }
+.about-section .text-link { width: fit-content; margin-top: 5px; }
+.about-story { margin-top: 78px; padding: 28px 0 32px; display: grid; grid-template-columns: 1.1fr .75fr; gap: clamp(35px, 8vw, 105px); align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.about-story-copy { max-width: 680px; }
+.about-story-copy h2, .about-detail-copy h2 { max-width: 600px; margin-bottom: 15px; font-size: clamp(1.65rem, 2.5vw, 2.25rem); }
+.about-story-copy p:not(.eyebrow), .about-detail-copy p:not(.eyebrow) { margin: 0 0 14px; color: var(--muted); }
+.about-note { padding: 24px 26px 24px 28px; border-left: 3px solid var(--button); border-radius: 5px; background: var(--surface); }
+.about-note-mark { display: block; height: 35px; color: var(--button); font-family: Georgia, serif; font-size: 3.3rem; line-height: 1; }
+.about-note p { margin: 7px 0 14px; color: var(--heading); font-size: 1.08rem; font-weight: 600; line-height: 1.5; }
+.about-note-caption { color: var(--muted); font-size: .78rem; }
+.about-detail { margin-top: 72px; display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(30px, 6vw, 76px); align-items: center; }
+.about-detail-image { margin: 0; }
+.about-detail-image img { width: 100%; height: 350px; display: block; padding: 9px; border-radius: 9px; object-fit: cover; background: var(--surface); }
+.about-detail-image figcaption { margin-top: 8px; color: var(--muted); font-size: .8rem; }
+.about-detail-copy .text-link { display: inline-block; margin-top: 4px; }
+.about-values { margin-top: 76px; padding-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--line); }
+.about-values-heading { grid-column: 1 / -1; max-width: 680px; margin-bottom: 8px; }
+.about-values-heading h2 { margin-bottom: 8px; }
+.about-values-heading p:last-child { margin: 0; color: var(--muted); }
+.value-item { min-height: 172px; padding: 20px; border-top: 2px solid var(--button); border-radius: 5px; background: var(--surface-soft); }
+.value-number { color: var(--button); font-size: .8rem; font-weight: 700; letter-spacing: .12em; }
+.value-item h3 { margin: 10px 0 7px; font-size: 1.12rem; }
+.value-item p { margin: 0; color: var(--muted); }
+.about-cta { margin-top: 70px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-radius: 6px; background: var(--heading); }
+.about-cta .eyebrow { color: var(--surface); }
+.about-cta h2 { margin: 0 0 6px; color: var(--page-bg); font-size: 1.5rem; }
+.about-cta p:last-child { max-width: 650px; margin: 0; color: var(--surface); }
+.about-cta .button { flex: 0 0 auto; border-color: var(--surface); background: var(--surface); color: var(--heading); }
+.about-cta .button:hover { border-color: white; background: white; }
+@media (max-width: 760px) {
+  .about-section { grid-template-columns: 1fr; }
+  .about-section > img { min-height: 300px; max-height: 420px; }
+  .about-section > div { padding: 28px 24px; }
+  .about-story { margin-top: 50px; grid-template-columns: 1fr; gap: 24px; }
+  .about-detail { margin-top: 48px; grid-template-columns: 1fr; gap: 24px; }
+  .about-detail-image img { height: 300px; }
+  .about-values { margin-top: 50px; gap: 12px; }
+  .about-cta { margin-top: 48px; padding: 24px; }
+}
+@media (max-width: 600px) {
+  .about-section > img { min-height: 240px; }
+  .about-section > div { padding: 23px 19px; }
+  .about-values { grid-template-columns: 1fr; }
+  .value-item { min-height: 0; padding: 17px 18px; }
+  .about-cta { align-items: flex-start; flex-direction: column; padding: 22px 19px; }
+  .about-cta .button { width: 100%; }
+}

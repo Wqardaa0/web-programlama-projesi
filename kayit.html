@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BAŞ MOBİLYA hesap formu.">
+  <title>Kayıt Ol | BAŞ MOBİLYA</title>
+  <link rel="stylesheet" href="css/ortak.css">
+  <link rel="stylesheet" href="css/kayit.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">BAŞ MOBİLYA</a>
+    <nav class="main-nav" aria-label="Ana menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a></nav>
+    <div class="header-tools"><a class="account-link" href="giris.html">Giriş Yap</a><a class="settings-link" href="ayarlar.html">Ayarlar</a><a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a></div>
+  </header>
+  <main class="page-content auth-page">
+    <section class="auth-layout register-layout" aria-label="Yeni hesap oluşturma">
+      <div class="auth-story">
+        <p class="eyebrow">BAŞ MOBİLYA · YENİ HESAP</p>
+        <h1>Yaşam alanınıza iyi gelecek parçaları bulun.</h1>
+        <p>Hesap oluşturarak ürünleri keşfetmeye ve alışveriş listenizi düzenlemeye başlayın.</p>
+        <img src="images/yasam-alani-hakkimizda.jpg" alt="Sıcak tonlarda mobilyalarla hazırlanmış bir yaşam alanı">
+        <a href="hakkimizda.html" class="auth-story-link">Markamızı tanıyın <span aria-hidden="true">→</span></a>
+      </div>
+      <section class="auth-panel register-panel" aria-labelledby="register-title">
+        <p class="eyebrow">Aramıza katılın</p>
+        <h2 id="register-title">Hesap oluştur</h2>
+        <p class="auth-description">Başlamak için aşağıdaki bilgileri doldurun.</p>
+        <form class="auth-form" data-register-form novalidate>
+          <label for="register-name">Ad soyad</label>
+          <input id="register-name" name="name" type="text" placeholder="Adınız ve soyadınız" autocomplete="name" required>
+          <label for="register-email">E-posta adresi</label>
+          <input id="register-email" name="email" type="email" placeholder="ornek@eposta.com" autocomplete="email" required>
+          <div class="password-fields">
+            <div><label for="register-password">Şifre <span>(en az 8 karakter)</span></label><input id="register-password" name="password" type="password" placeholder="Şifre belirleyin" autocomplete="new-password" minlength="8" required></div>
+            <div><label for="register-password-again">Şifre tekrarı</label><input id="register-password-again" name="passwordAgain" type="password" placeholder="Tekrar girin" autocomplete="new-password" minlength="8" required></div>
+          </div>
+          <button class="button" type="submit">Hesap Oluştur <span aria-hidden="true">→</span></button>
+          <p class="form-message" data-register-message aria-live="polite" hidden></p>
+        </form>
+        <div class="auth-switch"><span>Zaten hesabınız var mı?</span><a href="giris.html">Giriş yapın</a></div>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-main">
+      <section class="footer-brand"><a class="footer-logo" href="index.html">BAŞ MOBİLYA</a><p>Doğal tonlar ve sade tasarımlarla eviniz için kullanışlı mobilyalar.</p></section>
+      <section class="footer-column"><h2>Sayfalar</h2><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a></section>
+      <section class="footer-column"><h2>Hesap</h2><a href="giris.html">Giriş Yap</a><a href="kayit.html">Kayıt Ol</a><a href="ayarlar.html">Ayarlar</a></section>
+      <section class="footer-column"><h2>Alışveriş</h2><a href="sepet.html">Sepetim</a><a href="urunler.html">Ürünleri İncele</a></section>
+    </div>
+    <div class="footer-bottom"><span>© 2026 BAŞ MOBİLYA</span><span>Sade tasarım, rahat yaşam.</span></div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BAŞ MOBİLYA mobilya ürünleri."><title>Ürünler | BAŞ MOBİLYA</title>
+  <link rel="stylesheet" href="css/ortak.css"><link rel="stylesheet" href="css/urunler.css"><script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="logo" href="index.html">BAŞ MOBİLYA</a><nav class="main-nav" aria-label="Ana menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html" aria-current="page">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a></nav>
+    <div class="header-tools"><a class="account-link" href="giris.html">Giriş Yap</a><a class="settings-link" href="ayarlar.html">Ayarlar</a><a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a></div>
+  </header>
+  <main class="page-content">
+    <section class="page-intro"><p class="eyebrow">BAŞ MOBİLYA koleksiyonu</p><h1>Ürünler</h1><p>İhtiyacınıza uygun parçaları kategorilere göre inceleyin.</p></section>
+    <div class="catalog-layout">
+      <aside class="category-panel"><h2>Kategoriler</h2><div class="filter-list" aria-label="Ürün kategorileri"><button class="filter-button active" type="button" data-category="all">Tüm Ürünler</button><button class="filter-button" type="button" data-category="koltuk">Koltuk</button><button class="filter-button" type="button" data-category="masa">Masa</button><button class="filter-button" type="button" data-category="sandalye">Sandalye</button><button class="filter-button" type="button" data-category="yatak">Yatak</button><button class="filter-button" type="button" data-category="dolap">Dolap &amp; Kitaplık</button></div></aside>
+      <section class="catalog-products" aria-label="Ürün listesi"><div class="product-grid" data-product-list></div></section>
+    </div>
+  </main>
+  <dialog class="product-dialog" data-product-dialog aria-labelledby="dialog-product-name">
+    <button class="dialog-close" type="button" data-close-dialog aria-label="Kapat">×</button>
+    <img data-dialog-image src="" alt="">
+    <div class="dialog-content"><p class="eyebrow" data-dialog-category></p><h2 id="dialog-product-name" data-dialog-name></h2><p class="dialog-price" data-dialog-price></p><p data-dialog-description></p><p class="dialog-specs" data-dialog-specs></p><button class="button" type="button" data-dialog-add>Sepete Ekle</button></div>
+  </dialog>
+  <footer class="site-footer">
+    <div class="footer-main">
+      <section class="footer-brand"><a class="footer-logo" href="index.html">BAŞ MOBİLYA</a><p>Doğal tonlar ve sade tasarımlarla eviniz için kullanışlı mobilyalar.</p></section>
+      <section class="footer-column"><h2>Sayfalar</h2><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a></section>
+      <section class="footer-column"><h2>Kategoriler</h2><a href="urunler.html?kategori=koltuk">Koltuklar</a><a href="urunler.html?kategori=masa">Masalar</a><a href="urunler.html?kategori=sandalye">Sandalyeler</a><a href="urunler.html?kategori=yatak">Yataklar</a><a href="urunler.html?kategori=dolap">Dolap &amp; Kitaplık</a><a href="urunler.html">Tüm Ürünler</a></section>
+      <section class="footer-column"><h2>Alışveriş</h2><a href="sepet.html">Sepetim</a><a href="odeme.html">Teslimat ve Ödeme</a><p>Rahat yaşam için sade seçimler.</p></section>
+    </div>
+    <div class="footer-bottom"><span>© 2026 BAŞ MOBİLYA</span><span>Sade tasarım, rahat yaşam.</span></div>
+  </footer>
+</body>
+</html>

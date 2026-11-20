@@ -94,9 +94,15 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
 
 /* Ortak ürün kartları ve ürün detay penceresi */
 .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-.product-card { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--white); transition: border-color .16s ease, transform .16s ease; }
+.product-card { position: relative; min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--white); transition: border-color .16s ease, transform .16s ease; }
 .product-card:hover { transform: translateY(-3px); border-color: var(--button); }
 .product-card img { width: 100%; height: 248px; display: block; object-fit: contain; padding: 12px; background: var(--surface); }
+
+/* Favori butonu */
+.favorite-btn { position: absolute; z-index: 2; top: 10px; right: 10px; width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--white); color: var(--muted); cursor: pointer; transition: transform .18s ease, color .18s ease, border-color .18s ease; }
+.favorite-btn:hover { transform: scale(1.12); color: #e53935; border-color: #e53935; }
+.favorite-btn.active { color: #e53935; border-color: #e53935; }
+.favorite-btn svg { width: 19px; height: 19px; fill: currentColor; }
 .product-image-button { width: 100%; display: block; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .product-image-button img { transition: transform .18s ease; }
 .product-image-button:hover img { transform: scale(1.025); }
@@ -170,6 +176,25 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
   .auth-layout { grid-template-columns: 1fr; gap: 18px; }
   .auth-panel { padding: 23px 19px; }
 }
+
+/* Toast Bildirimleri */
+.toast-container { position: fixed; z-index: 10000; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast { pointer-events: auto; min-width: 270px; max-width: 380px; padding: 13px 18px; border-radius: 8px; border: 1px solid var(--line); border-left: 4px solid var(--button); background: var(--surface); color: var(--heading); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14); display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: .92rem; font-weight: 600; opacity: 0; transform: translateX(110%); transition: transform .32s cubic-bezier(0.16, 1, 0.3, 1), opacity .32s ease; }
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast-content { display: flex; align-items: center; gap: 10px; }
+.toast-icon { font-size: 1.15rem; color: var(--button); }
+.toast-close { border: none; background: transparent; color: var(--muted); font-size: 1.15rem; cursor: pointer; padding: 0 2px; line-height: 1; }
+.toast-close:hover { color: var(--heading); }
+
+/* Scroll-to-top Butonu */
+.scroll-top-btn { position: fixed; z-index: 999; bottom: 24px; left: 24px; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--heading); cursor: pointer; display: grid; place-items: center; font-size: 1.25rem; font-weight: 700; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .25s ease, transform .25s ease, background-color .18s ease, color .18s ease; }
+.scroll-top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top-btn:hover { border-color: var(--button); background: var(--button); color: white; }
+
+/* Scroll Reveal Animasyonu */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }

@@ -13,8 +13,27 @@
   <main class="page-content">
     <section class="page-intro"><p class="eyebrow">BAŞ MOBİLYA koleksiyonu</p><h1>Ürünler</h1><p>İhtiyacınıza uygun parçaları kategorilere göre inceleyin.</p></section>
     <div class="catalog-layout">
-      <aside class="category-panel"><h2>Kategoriler</h2><div class="filter-list" aria-label="Ürün kategorileri"><button class="filter-button active" type="button" data-category="all">Tüm Ürünler</button><button class="filter-button" type="button" data-category="koltuk">Koltuk</button><button class="filter-button" type="button" data-category="masa">Masa</button><button class="filter-button" type="button" data-category="sandalye">Sandalye</button><button class="filter-button" type="button" data-category="yatak">Yatak</button><button class="filter-button" type="button" data-category="dolap">Dolap &amp; Kitaplık</button></div></aside>
-      <section class="catalog-products" aria-label="Ürün listesi"><div class="product-grid" data-product-list></div></section>
+      <aside class="category-panel"><h2>Kategoriler</h2><div class="filter-list" aria-label="Ürün kategorileri"><button class="filter-button active" type="button" data-category="all">Tüm Ürünler</button><button class="filter-button" type="button" data-category="koltuk">Koltuk</button><button class="filter-button" type="button" data-category="masa">Masa</button><button class="filter-button" type="button" data-category="sandalye">Sandalye</button><button class="filter-button" type="button" data-category="yatak">Yatak</button><button class="filter-button" type="button" data-category="dolap">Dolap &amp; Kitaplık</button><button class="filter-button" type="button" data-category="favorites">♥ Favorilerim (<span data-favorites-count>0</span>)</button></div></aside>
+      <section class="catalog-products" aria-label="Ürün listesi">
+        <div class="catalog-toolbar">
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="product-search" placeholder="Ürün adı veya özellik ara..." aria-label="Ürünlerde ara">
+            <button type="button" class="search-clear" id="search-clear" hidden aria-label="Aramayı temizle">✕</button>
+          </div>
+          <div class="sort-box">
+            <label for="product-sort">Sırala:</label>
+            <select id="product-sort" aria-label="Ürünleri sırala">
+              <option value="default">Önerilen Sıralama</option>
+              <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+              <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+              <option value="name-asc">İsim: A - Z</option>
+            </select>
+          </div>
+          <span class="product-count-badge" data-product-count-badge>25 ürün listelendi</span>
+        </div>
+        <div class="product-grid" data-product-list></div>
+      </section>
     </div>
   </main>
   <dialog class="product-dialog" data-product-dialog aria-labelledby="dialog-product-name">

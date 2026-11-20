@@ -61,6 +61,94 @@ const categoryNames = {
 // Sepet ve sipariş anahtarları standartlaştırıldı (eski anahtarlara geriye dönük uyumluluk korunur).
 const cartStorageKey = "basMobilyaCart";
 const orderStorageKey = "basMobilyaLastOrder";
+const favoritesStorageKey = "basMobilyaFavorites";
+
+// Favoriler verisini yönetir
+function getFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(favoritesStorageKey)) || [];
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveFavorites(favorites) {
+  localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+  updateFavoritesCount();
+}
+
+function isFavorite(productId) {
+  return getFavorites().includes(productId);
+}
+
+function toggleFavorite(productId) {
+  const favs = getFavorites();
+  const index = favs.indexOf(productId);
+  let isNowFav = false;
+  if (index > -1) {
+    favs.splice(index, 1);
+  } else {
+    favs.push(productId);
+    isNowFav = true;
+  }
+  saveFavorites(favs);
+  return isNowFav;
+}
+
+function updateFavoritesCount() {
+  const count = getFavorites().length;
+  document.querySelectorAll("[data-favorites-count]").forEach((element) => {
+    element.textContent = count;
+  });
+}
+
+// Bildirim (Toast) sistemi
+function showToast(message, icon = "✓") {
+  let container = document.querySelector(".toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.className = "toast-container";
+    container.setAttribute("aria-live", "polite");
+    document.body.appendChild(container);
+  }
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `<div class="toast-content"><span class="toast-icon" aria-hidden="true">${icon}</span><span>${message}</span></div><button class="toast-close" type="button" aria-label="Kapat">×</button>`;
+  container.appendChild(toast);
+
+  window.requestAnimationFrame(() => {
+    toast.classList.add("show");
+  });
+
+  let timer;
+  const dismiss = () => {
+    window.clearTimeout(timer);
+    toast.classList.remove("show");
+    window.setTimeout(() => toast.remove(), 320);
+  };
+
+  toast.querySelector(".toast-close").addEventListener("click", dismiss);
+  timer = window.setTimeout(dismiss, 3000);
+}
+
+// Scroll reveal görünüm gözlemcisi
+function observeReveal() {
+  if (!("IntersectionObserver" in window)) {
+    document.querySelectorAll(".reveal").forEach((element) => element.classList.add("revealed"));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll(".reveal:not(.revealed)").forEach((element) => observer.observe(element));
+}
 
 // Sepet verisini localStorage içinden alır; ilk ziyarette boş sepet döner.
 function getCart() {
@@ -91,7 +179,9 @@ function updateCartCount() {
 
 // Ürün kartlarını verilen alana ekler.
 function createProductCard(product) {
-  return `<article class="product-card">
+  const isFav = isFavorite(product.id);
+  return `<article class="product-card reveal">
+    <button class="favorite-btn ${isFav ? 'active' : ''}" type="button" data-toggle-favorite="${product.id}" aria-label="${product.name} favorilere ekle veya çıkar" title="${isFav ? 'Favorilerden çıkar' : 'Favorilere ekle'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
     <button class="product-image-button" type="button" data-show-product="${product.id}" aria-label="${product.name} ürün bilgilerini göster"><img src="${product.image}" alt="${product.alt}" loading="lazy"></button>
     <div class="product-info"><h3>${product.name}</h3><p class="product-price">${money.format(product.price)}</p>
     <button class="button" type="button" data-add-to-cart="${product.id}">Sepete Ekle</button></div>
@@ -99,7 +189,10 @@ function createProductCard(product) {
 }
 
 function renderProducts(container, list) {
-  if (container) container.innerHTML = list.map(createProductCard).join("");
+  if (container) {
+    container.innerHTML = list.map(createProductCard).join("");
+    observeReveal();
+  }
 }
 
 function addToCart(productId) {
@@ -163,6 +256,34 @@ function renderCart() {
 }
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
+  updateFavoritesCount();
+
+  // Scroll to top butonu oluşturur ve bağlar
+  const scrollTopBtn = document.createElement("button");
+  scrollTopBtn.className = "scroll-top-btn";
+  scrollTopBtn.type = "button";
+  scrollTopBtn.setAttribute("aria-label", "Yukarı çık");
+  scrollTopBtn.title = "Yukarı çık";
+  scrollTopBtn.innerHTML = "↑";
+  document.body.appendChild(scrollTopBtn);
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollTopBtn.classList.add("visible");
+    } else {
+      scrollTopBtn.classList.remove("visible");
+    }
+  }, { passive: true });
+
+  scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // Sayfa içi bölümleri scroll reveal gözlemcisine ekler
+  document.querySelectorAll(".section, .page-intro, .category-card, .process-item, .home-story, .home-process, .about-section, .about-story, .about-detail, .about-values, .value-item").forEach((el) => {
+    el.classList.add("reveal");
+  });
+  observeReveal();
 
   // Ayarlar sayfasındaki seçim tema tercihini kaydeder.
   document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
@@ -179,35 +300,115 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ana sayfada üç öne çıkan ürünü gösterir.
   renderProducts(document.querySelector("[data-featured-products]"), products.slice(0, 3));
 
-  // Ürün sayfasındaki kategori düğmeleri listeyi filtreler.
+  // Ürün sayfasındaki kategori, arama ve sıralama kontrolleri
   const productList = document.querySelector("[data-product-list]");
   if (productList) {
     const filterButtons = Array.from(document.querySelectorAll("[data-category]"));
-    function showCategory(category, updateUrl = true) {
-      const selectedButton = filterButtons.find((button) => button.dataset.category === category) || filterButtons[0];
-      filterButtons.forEach((button) => button.classList.toggle("active", button === selectedButton));
-      const selectedCategory = selectedButton ? selectedButton.dataset.category : "all";
-      const filteredProducts = selectedCategory === "all" ? products : products.filter((product) => product.category === selectedCategory);
-      renderProducts(productList, filteredProducts);
+    const searchInput = document.getElementById("product-search");
+    const searchClear = document.getElementById("search-clear");
+    const sortSelect = document.getElementById("product-sort");
+    const countBadge = document.querySelector("[data-product-count-badge]");
 
+    let activeCategory = new URLSearchParams(window.location.search || "").get("kategori") || "all";
+    let searchQuery = "";
+    let activeSort = "default";
+
+    function filterAndRenderCatalog(updateUrl = true) {
+      // 1. Kategori / Favoriler Filtresi
+      let filtered = products;
+      if (activeCategory === "favorites") {
+        const favs = getFavorites();
+        filtered = filtered.filter((p) => favs.includes(p.id));
+      } else if (activeCategory !== "all") {
+        filtered = filtered.filter((p) => p.category === activeCategory);
+      }
+
+      // 2. Metin Arama Filtresi
+      if (searchQuery) {
+        const query = searchQuery.toLocaleLowerCase("tr");
+        filtered = filtered.filter((p) =>
+          p.name.toLocaleLowerCase("tr").includes(query) ||
+          p.description.toLocaleLowerCase("tr").includes(query) ||
+          p.specs.toLocaleLowerCase("tr").includes(query)
+        );
+      }
+
+      // 3. Sıralama
+      if (activeSort === "price-asc") {
+        filtered = [...filtered].sort((a, b) => a.price - b.price);
+      } else if (activeSort === "price-desc") {
+        filtered = [...filtered].sort((a, b) => b.price - a.price);
+      } else if (activeSort === "name-asc") {
+        filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name, "tr"));
+      }
+
+      // 4. Ekrana Basma
+      if (filtered.length === 0) {
+        productList.innerHTML = `<div class="no-results"><h3>Sonuç bulunamadı</h3><p>Seçili filtre veya arama kriterlerine uygun ürün bulunmamaktadır.</p><button type="button" class="button" data-reset-filters>Filtreleri Temizle</button></div>`;
+      } else {
+        renderProducts(productList, filtered);
+      }
+
+      // 5. Adet Rozeti
+      if (countBadge) {
+        countBadge.textContent = `${filtered.length} ürün listelendi`;
+      }
+
+      // 6. Aktif Kategori Butonu
+      const selectedButton = filterButtons.find((button) => button.dataset.category === activeCategory) || filterButtons[0];
+      filterButtons.forEach((button) => button.classList.toggle("active", button === selectedButton));
+
+      // 7. URL Senkronizasyonu
       if (updateUrl) {
         const url = new URL(window.location);
-        if (selectedCategory === "all") {
+        if (activeCategory === "all") {
           url.searchParams.delete("kategori");
         } else {
-          url.searchParams.set("kategori", selectedCategory);
+          url.searchParams.set("kategori", activeCategory);
         }
         window.history.replaceState({}, "", url);
       }
     }
-    const requestedCategory = new URLSearchParams(window.location.search || "").get("kategori");
-    showCategory(requestedCategory || "all", false);
+
+    window.refreshCatalog = () => filterAndRenderCatalog(false);
+
+    filterAndRenderCatalog(false);
+
     filterButtons.forEach((button) => {
-      button.addEventListener("click", () => showCategory(button.dataset.category, true));
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.category;
+        filterAndRenderCatalog(true);
+      });
     });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        searchQuery = searchInput.value.trim();
+        if (searchClear) searchClear.hidden = !searchQuery;
+        filterAndRenderCatalog(false);
+      });
+    }
+
+    if (searchClear) {
+      searchClear.addEventListener("click", () => {
+        searchInput.value = "";
+        searchQuery = "";
+        searchClear.hidden = true;
+        filterAndRenderCatalog(false);
+        searchInput.focus();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener("change", () => {
+        activeSort = sortSelect.value;
+        filterAndRenderCatalog(false);
+      });
+    }
+
     window.addEventListener("popstate", () => {
-      const currentCat = new URLSearchParams(window.location.search || "").get("kategori");
-      showCategory(currentCat || "all", false);
+      activeCategory = new URLSearchParams(window.location.search || "").get("kategori") || "all";
+      filterAndRenderCatalog(false);
     });
   }
 
@@ -244,11 +445,42 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       return;
     }
+    const favButton = event.target.closest("[data-toggle-favorite]");
+    const resetFiltersButton = event.target.closest("[data-reset-filters]");
     const addButton = event.target.closest("[data-add-to-cart]");
     const removeButton = event.target.closest("[data-remove-from-cart]");
     const quantityButton = event.target.closest("[data-quantity-change]");
     const detailButton = event.target.closest("[data-show-product]");
     const dialog = document.querySelector("[data-product-dialog]");
+
+    if (resetFiltersButton) {
+      const searchInput = document.getElementById("product-search");
+      const searchClear = document.getElementById("search-clear");
+      const sortSelect = document.getElementById("product-sort");
+      if (searchInput) searchInput.value = "";
+      if (searchClear) searchClear.hidden = true;
+      if (sortSelect) sortSelect.value = "default";
+      const allBtn = document.querySelector('[data-category="all"]');
+      if (allBtn) allBtn.click();
+      return;
+    }
+
+    if (favButton) {
+      const productId = Number(favButton.dataset.toggleFavorite);
+      const isNowFav = toggleFavorite(productId);
+      favButton.classList.toggle("active", isNowFav);
+      favButton.title = isNowFav ? "Favorilerden çıkar" : "Favorilere ekle";
+      const product = products.find((item) => item.id === productId);
+      const productName = product ? product.name : "Ürün";
+      showToast(isNowFav ? `${productName} favorilere eklendi.` : `${productName} favorilerden çıkarıldı.`, isNowFav ? "♥" : "♡");
+
+      const activeFavTab = document.querySelector('[data-category="favorites"].active');
+      if (activeFavTab && typeof window.refreshCatalog === "function") {
+        window.refreshCatalog();
+      }
+      return;
+    }
+
     if (detailButton && dialog) {
       const product = products.find((item) => item.id === Number(detailButton.dataset.showProduct));
       if (product) {
@@ -265,7 +497,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (event.target.closest("[data-close-dialog]")) dialog?.close();
     if (addButton) {
-      addToCart(Number(addButton.dataset.addToCart));
+      const productId = Number(addButton.dataset.addToCart);
+      addToCart(productId);
+      const product = products.find((item) => item.id === productId);
+      showToast(`${product ? product.name : "Ürün"} sepete eklendi!`, "✓");
       addButton.textContent = "Eklendi";
       window.setTimeout(() => { addButton.textContent = "Sepete Ekle"; }, 900);
     }

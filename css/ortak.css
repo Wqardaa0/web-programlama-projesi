@@ -75,6 +75,8 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
 .button { min-height: 49px; display: inline-flex; align-items: center; justify-content: center; padding: 12px 25px; border: 1px solid var(--button); background: var(--button); color: white; font: inherit; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; transition: background-color .16s ease, color .16s ease; }
 .button { border-radius: 5px; }
 .button:hover { border-color: var(--button-hover); background: var(--button-hover); }
+.button-light { border: 1px solid var(--button); background: transparent; color: var(--heading); }
+.button-light:hover { border-color: var(--button-hover); background: var(--surface); color: var(--heading); }
 .button:focus-visible, .filter-button:focus-visible, .remove-button:focus-visible { outline: 2px solid var(--heading); outline-offset: 3px; }
 .button-secondary { margin-top: 8px; }
 .contact-form { display: grid; gap: 8px; }
@@ -128,9 +130,6 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
 /* Giriş ve kayıt formları ortak alan düzenini paylaşır. */
 .auth-page { max-width: 1100px; }
 .auth-layout { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 34px; }
-.auth-visual { min-width: 0; margin: 0; }
-.auth-visual img { width: 100%; height: 440px; display: block; padding: 10px; border-radius: 8px; object-fit: cover; background: var(--surface); }
-.auth-visual figcaption { margin: 10px 2px 0; color: var(--muted); font-size: .86rem; }
 .auth-panel { padding: 30px; border-top: 3px solid var(--button); border-radius: 0 0 8px 8px; background: var(--surface); }
 .auth-panel h1 { margin-bottom: 7px; font-size: 2rem; }
 .auth-panel > p:not(.eyebrow) { margin: 0 0 18px; color: var(--muted); }
@@ -149,7 +148,6 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
   .header-tools { grid-column: 2; grid-row: 1; }
   .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .auth-layout { gap: 22px; }
-  .auth-visual img { height: 380px; }
 }
 @media (max-width: 600px) {
   .site-header { padding: 13px 17px 10px; gap: 8px 14px; }
@@ -170,7 +168,6 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
   .footer-main { gap: 24px 18px; }
   .footer-bottom { flex-direction: column; gap: 3px; }
   .auth-layout { grid-template-columns: 1fr; gap: 18px; }
-  .auth-visual img { height: 220px; }
   .auth-panel { padding: 23px 19px; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -50,10 +50,23 @@ const products = [
 
 const money = new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY", maximumFractionDigits: 0 });
 
+const categoryNames = {
+  koltuk: "Koltuk",
+  masa: "Masa",
+  sandalye: "Sandalye",
+  yatak: "Yatak",
+  dolap: "Dolap ve kitaplık"
+};
+
+// Sepet ve sipariş anahtarları standartlaştırıldı (eski anahtarlara geriye dönük uyumluluk korunur).
+const cartStorageKey = "basMobilyaCart";
+const orderStorageKey = "basMobilyaLastOrder";
+
 // Sepet verisini localStorage içinden alır; ilk ziyarette boş sepet döner.
 function getCart() {
   try {
-    const savedCart = JSON.parse(localStorage.getItem("luneraCart")) || [];
+    const rawCart = localStorage.getItem(cartStorageKey) || localStorage.getItem("luneraCart");
+    const savedCart = JSON.parse(rawCart) || [];
     return Array.isArray(savedCart) ? savedCart : [];
   } catch (error) {
     return [];
@@ -61,7 +74,8 @@ function getCart() {
 }
 
 function saveCart(cart) {
-  localStorage.setItem("luneraCart", JSON.stringify(cart));
+  localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+  localStorage.removeItem("luneraCart");
   updateCartCount();
 }
 
@@ -131,13 +145,6 @@ function renderCart() {
   if (checkoutLink) checkoutLink.hidden = false;
   if (summaryPanel) summaryPanel.hidden = false;
 
-  const categoryNames = {
-    koltuk: "Koltuk",
-    masa: "Masa",
-    sandalye: "Sandalye",
-    yatak: "Yatak",
-    dolap: "Dolap ve kitaplık"
-  };
   let total = 0;
   cartContainer.innerHTML = cart.map((item) => {
     const product = products.find((entry) => entry.id === item.id);
@@ -176,17 +183,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const productList = document.querySelector("[data-product-list]");
   if (productList) {
     const filterButtons = Array.from(document.querySelectorAll("[data-category]"));
-    function showCategory(category) {
+    function showCategory(category, updateUrl = true) {
       const selectedButton = filterButtons.find((button) => button.dataset.category === category) || filterButtons[0];
       filterButtons.forEach((button) => button.classList.toggle("active", button === selectedButton));
       const selectedCategory = selectedButton ? selectedButton.dataset.category : "all";
       const filteredProducts = selectedCategory === "all" ? products : products.filter((product) => product.category === selectedCategory);
       renderProducts(productList, filteredProducts);
+
+      if (updateUrl) {
+        const url = new URL(window.location);
+        if (selectedCategory === "all") {
+          url.searchParams.delete("kategori");
+        } else {
+          url.searchParams.set("kategori", selectedCategory);
+        }
+        window.history.replaceState({}, "", url);
+      }
     }
     const requestedCategory = new URLSearchParams(window.location.search || "").get("kategori");
-    showCategory(requestedCategory || "all");
+    showCategory(requestedCategory || "all", false);
     filterButtons.forEach((button) => {
-      button.addEventListener("click", () => showCategory(button.dataset.category));
+      button.addEventListener("click", () => showCategory(button.dataset.category, true));
+    });
+    window.addEventListener("popstate", () => {
+      const currentCat = new URLSearchParams(window.location.search || "").get("kategori");
+      showCategory(currentCat || "all", false);
     });
   }
 
@@ -233,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (product) {
         dialog.querySelector("[data-dialog-image]").src = product.image;
         dialog.querySelector("[data-dialog-image]").alt = product.alt;
-        dialog.querySelector("[data-dialog-category]").textContent = product.category;
+        dialog.querySelector("[data-dialog-category]").textContent = categoryNames[product.category] || product.category;
         dialog.querySelector("[data-dialog-name]").textContent = product.name;
         dialog.querySelector("[data-dialog-price]").textContent = money.format(product.price);
         dialog.querySelector("[data-dialog-description]").textContent = product.description;
@@ -314,9 +335,14 @@ document.addEventListener("DOMContentLoaded", () => {
         message.textContent = "Şifre en az 8 karakter olmalıdır.";
         message.classList.add("error");
       } else {
-        // Başarılı giriş mesajı gösterilmez; projede gerçek hesap doğrulaması yoktur.
-        message.textContent = "";
-        message.hidden = true;
+        message.textContent = "Giriş başarılı! Ana sayfaya yönlendiriliyorsunuz...";
+        message.classList.add("success");
+        message.classList.remove("error");
+        message.hidden = false;
+        loginForm.reset();
+        window.setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1200);
       }
     });
   }
@@ -345,9 +371,14 @@ document.addEventListener("DOMContentLoaded", () => {
         message.textContent = "Şifre alanları birbiriyle eşleşmiyor.";
         message.classList.add("error");
       } else {
-        // Başarılı kayıt mesajı gösterilmez; parola hiçbir yerde tutulmaz.
-        message.textContent = "";
-        message.hidden = true;
+        message.textContent = "Hesabınız başarıyla oluşturuldu! Giriş sayfasına yönlendiriliyorsunuz...";
+        message.classList.add("success");
+        message.classList.remove("error");
+        message.hidden = false;
+        registerForm.reset();
+        window.setTimeout(() => {
+          window.location.href = "giris.html";
+        }, 1200);
       }
     });
   }
@@ -431,7 +462,8 @@ document.addEventListener("DOMContentLoaded", () => {
           items: cart.map((item) => ({ id: item.id, quantity: item.quantity })),
           total
         };
-        localStorage.setItem("luneraLastOrder", JSON.stringify(order));
+        localStorage.setItem(orderStorageKey, JSON.stringify(order));
+        localStorage.removeItem("luneraLastOrder");
         saveCart([]);
         window.location.href = "siparis.html";
       }
@@ -442,8 +474,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmation = document.querySelector("[data-order-confirmation]");
   if (confirmation) {
     try {
-      const order = JSON.parse(localStorage.getItem("luneraLastOrder")) || null;
-      if (order) {
+      const rawOrder = localStorage.getItem(orderStorageKey) || localStorage.getItem("luneraLastOrder");
+      const order = rawOrder ? JSON.parse(rawOrder) : null;
+      if (order && order.items && order.items.length > 0) {
         const orderDetails = confirmation.querySelector("[data-order-details]");
         const orderItems = confirmation.querySelector("[data-order-items]");
         const orderMessage = confirmation.querySelector("[data-order-message]");
@@ -459,9 +492,13 @@ document.addEventListener("DOMContentLoaded", () => {
           confirmation.querySelector("[data-order-address]").textContent = [order.city, order.district, order.address].filter(Boolean).join(", ");
           confirmation.querySelector("[data-order-total]").textContent = money.format(order.total || 0);
         }
+      } else {
+        // Sipariş bilgisi yokken siparis.html'e doğrudan girildiyse ana sayfaya yönlendir
+        window.location.replace("index.html");
       }
     } catch (error) {
       console.error("Sipariş özeti okunamadı.", error);
+      window.location.replace("index.html");
     }
   }
 });

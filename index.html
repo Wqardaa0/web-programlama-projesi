@@ -17,12 +17,14 @@
     </nav>
     <div class="header-tools"><a class="account-link" href="giris.html">Giriş Yap</a><a class="settings-link" href="ayarlar.html">Ayarlar</a><a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a></div>
   </header>
+
   <main>
-    <section class="hero">
-      <figure class="hero-visual">
+    <!-- ── HERO: Tam genişlik görsel + overlay metin ── -->
+    <section class="hero reveal">
+      <div class="hero-image-wrap">
         <img class="hero-image" src="images/oturma-odasi-ana-gorsel.jpg" alt="Açık tonlarda, sade mobilyalarla düzenlenmiş bir oturma odası">
-        <figcaption>Günlük yaşamın içinde kendine yer bulan tasarımlar</figcaption>
-      </figure>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-copy">
         <p class="eyebrow">BAŞ MOBİLYA · Ev için seçkiler</p>
         <h1>Evinizin ritmine uyan mobilyalar</h1>
@@ -31,17 +33,44 @@
         <a class="hero-about-link" href="hakkimizda.html">Tasarım yaklaşımımızı tanıyın <span aria-hidden="true">→</span></a>
       </div>
     </section>
-    <section class="section category-section" aria-labelledby="category-title">
-      <div class="section-heading"><div><p class="eyebrow">İhtiyacınıza göre</p><h2 id="category-title">Evinizin her köşesi için</h2></div><a class="text-link" href="urunler.html">Tüm kategoriler →</a></div>
+
+    <!-- ── KATEGORİLER: Tall overlay kartlar ── -->
+    <section class="section category-section reveal" aria-labelledby="category-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">İhtiyacınıza göre</p><h2 id="category-title">Evinizin her köşesi için</h2></div>
+        <a class="text-link" href="urunler.html">Tüm kategoriler →</a>
+      </div>
       <div class="category-grid">
-        <a class="category-card" href="urunler.html?kategori=koltuk"><img src="images/koltuk-mira-uclu.jpg" alt="Açık renkli üçlü koltuk" loading="lazy"><span>Koltuklar <b>→</b></span></a>
-        <a class="category-card" href="urunler.html?kategori=masa"><img src="images/masa-arin-yemek.jpg" alt="Ahşap yemek masası" loading="lazy"><span>Masalar <b>→</b></span></a>
-        <a class="category-card" href="urunler.html?kategori=sandalye"><img src="images/sandalye-ekin-ahsap.jpg" alt="Ahşap yemek sandalyesi" loading="lazy"><span>Sandalyeler <b>→</b></span></a>
-        <a class="category-card" href="urunler.html?kategori=yatak"><img src="images/yatak-mira-tek-kisilik.jpg" alt="Tek kişilik yatak" loading="lazy"><span>Yataklar <b>→</b></span></a>
-        <a class="category-card" href="urunler.html?kategori=dolap"><img src="images/kitaplik-sera.jpg" alt="Ahşap kitaplık" loading="lazy"><span>Dolap ve kitaplık <b>→</b></span></a>
+        <a class="category-card" href="urunler.html?kategori=koltuk">
+          <img src="images/koltuk-mira-uclu.jpg" alt="Açık renkli üçlü koltuk" loading="lazy">
+          <div class="category-card-overlay" aria-hidden="true"></div>
+          <span>Koltuklar <b>→</b></span>
+        </a>
+        <a class="category-card" href="urunler.html?kategori=masa">
+          <img src="images/masa-arin-yemek.jpg" alt="Ahşap yemek masası" loading="lazy">
+          <div class="category-card-overlay" aria-hidden="true"></div>
+          <span>Masalar <b>→</b></span>
+        </a>
+        <a class="category-card" href="urunler.html?kategori=sandalye">
+          <img src="images/sandalye-ekin-ahsap.jpg" alt="Ahşap yemek sandalyesi" loading="lazy">
+          <div class="category-card-overlay" aria-hidden="true"></div>
+          <span>Sandalyeler <b>→</b></span>
+        </a>
+        <a class="category-card" href="urunler.html?kategori=yatak">
+          <img src="images/yatak-mira-tek-kisilik.jpg" alt="Tek kişilik yatak" loading="lazy">
+          <div class="category-card-overlay" aria-hidden="true"></div>
+          <span>Yataklar <b>→</b></span>
+        </a>
+        <a class="category-card" href="urunler.html?kategori=dolap">
+          <img src="images/kitaplik-sera.jpg" alt="Ahşap kitaplık" loading="lazy">
+          <div class="category-card-overlay" aria-hidden="true"></div>
+          <span>Dolap &amp; Kitaplık <b>→</b></span>
+        </a>
       </div>
     </section>
-    <section class="section home-story" aria-labelledby="home-story-title">
+
+    <!-- ── ÖYKÜSEL BÖLÜM ── -->
+    <section class="section home-story reveal" aria-labelledby="home-story-title">
       <img src="images/yasam-alani-hakkimizda.jpg" alt="Sade mobilyalarla düzenlenmiş, sıcak tonlu bir yaşam alanı" loading="lazy">
       <div class="home-story-copy">
         <p class="eyebrow">Evin içinde, her gün</p>
@@ -50,28 +79,52 @@
         <a class="text-link" href="hakkimizda.html">Yaklaşımımızı tanıyın →</a>
       </div>
     </section>
-    <section class="section featured-section">
+
+    <!-- ── ÖNE ÇIKANLAR ── -->
+    <section class="section featured-section reveal">
       <div class="section-heading"><div><p class="eyebrow">Koleksiyondan</p><h2>Öne Çıkan Ürünler</h2></div><a class="text-link" href="urunler.html">Tüm ürünler →</a></div>
       <div class="product-grid" data-featured-products></div>
     </section>
-    <section class="section home-process" aria-labelledby="home-process-title">
+
+    <!-- ── 3 ADIM (Timeline) ── -->
+    <section class="section home-process reveal" aria-labelledby="home-process-title">
       <div class="section-heading"><div><p class="eyebrow">Kolayca keşfedin</p><h2 id="home-process-title">Alışverişe üç adımda başlayın</h2></div></div>
       <div class="process-grid">
-        <article class="process-item"><span>01</span><h3>Kategoriyi seçin</h3><p>İhtiyacınıza göre koltuk, masa, sandalye, yatak veya dolap ve kitaplık ürünlerine geçin.</p></article>
-        <article class="process-item"><span>02</span><h3>Ürün ayrıntılarına bakın</h3><p>Ürün fotoğrafına dokunarak açıklama ve ölçü notlarını görüntüleyin.</p></article>
-        <article class="process-item"><span>03</span><h3>Sepetinizi oluşturun</h3><p>Beğendiğiniz ürünleri ekleyin; sepetinizde adetleri düzenleyip toplamı görün.</p></article>
+        <article class="process-item">
+          <span>01</span>
+          <h3>Kategoriyi seçin</h3>
+          <p>İhtiyacınıza göre koltuk, masa, sandalye, yatak veya dolap ve kitaplık ürünlerine geçin.</p>
+        </article>
+        <article class="process-item">
+          <span>02</span>
+          <h3>Ürün ayrıntılarına bakın</h3>
+          <p>Ürün fotoğrafına dokunarak açıklama ve ölçü notlarını görüntüleyin.</p>
+        </article>
+        <article class="process-item">
+          <span>03</span>
+          <h3>Sepetinizi oluşturun</h3>
+          <p>Beğendiğiniz ürünleri ekleyin; sepetinizde adetleri düzenleyip toplamı görün.</p>
+        </article>
       </div>
     </section>
-    <section class="home-note" aria-labelledby="home-note-title">
-      <div><p class="eyebrow">BAŞ MOBİLYA</p><h2>İhtiyacınıza uyan parçayı bulun</h2><p>Kategori filtrelerini kullanın, ürün görsellerine dokunarak ölçü ve ürün açıklaması gibi ayrıntıları inceleyin.</p></div>
+
+    <!-- ── ALT BANNER ── -->
+    <div class="home-note reveal">
+      <div>
+        <p class="eyebrow">BAŞ MOBİLYA</p>
+        <h2>İhtiyacınıza uyan parçayı bulun</h2>
+        <p>Kategori filtrelerini kullanın, ürün görsellerine dokunarak ölçü ve ürün açıklaması gibi ayrıntıları inceleyin.</p>
+      </div>
       <a class="text-link" href="urunler.html">Koleksiyonu keşfet →</a>
-    </section>
+    </div>
   </main>
+
   <dialog class="product-dialog" data-product-dialog aria-labelledby="dialog-product-name">
     <button class="dialog-close" type="button" data-close-dialog aria-label="Kapat">×</button>
     <img data-dialog-image src="" alt="">
     <div class="dialog-content"><p class="eyebrow" data-dialog-category></p><h2 id="dialog-product-name" data-dialog-name></h2><p class="dialog-price" data-dialog-price></p><p data-dialog-description></p><p class="dialog-specs" data-dialog-specs></p><button class="button" type="button" data-dialog-add>Sepete Ekle</button></div>
   </dialog>
+
   <footer class="site-footer">
     <div class="footer-main">
       <section class="footer-brand"><a class="footer-logo" href="index.html">BAŞ MOBİLYA</a><p>Doğal tonlar ve sade tasarımlarla eviniz için kullanışlı mobilyalar.</p></section>

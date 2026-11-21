@@ -16,65 +16,166 @@
     <nav class="main-nav" aria-label="Ana menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a></nav>
     <div class="header-tools"><a class="account-link" href="giris.html">Giriş Yap</a><a class="settings-link" href="ayarlar.html">Ayarlar</a><a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a></div>
   </header>
+
   <main class="page-content checkout-page">
     <section class="page-intro checkout-intro">
       <p class="eyebrow">Siparişinizi tamamlayın</p>
       <h1>Teslimat ve Ödeme</h1>
       <p>Teslimat bilgilerinizi girin, siparişinizi kontrol edip size uygun ödeme yöntemini seçin.</p>
-      <nav class="checkout-progress" aria-label="Alışveriş adımları"><ol>
-        <li><a href="sepet.html"><span>01</span>Sepet</a></li>
-        <li class="current" aria-current="step"><a href="odeme.html"><span>02</span>Teslimat</a></li>
-        <li><a href="odeme.html#payment"><span>03</span>Ödeme</a></li>
-        <li><span class="step-number">04</span><span>Sipariş Onayı</span></li>
-      </ol></nav>
+
+      <!-- Progress bar: daha büyük, yuvarlak daireli adımlar -->
+      <nav class="checkout-progress" aria-label="Alışveriş adımları">
+        <ol>
+          <li class="done"><a href="sepet.html"><span>01</span>Sepet</a></li>
+          <li class="current" aria-current="step"><a href="odeme.html"><span>02</span>Teslimat</a></li>
+          <li><a href="odeme.html#payment"><span>03</span>Ödeme</a></li>
+          <li><span class="step-number">04</span><span>Onay</span></li>
+        </ol>
+      </nav>
     </section>
 
     <div class="checkout-layout">
+
+      <!-- ── SOL: FORM ── -->
       <form class="checkout-form" data-checkout-form novalidate>
+
+        <!-- TESLİMAT KARTI -->
         <section class="checkout-section delivery-section">
-          <div class="section-heading"><span class="section-number">01</span><div><h2>Teslimat bilgileri</h2><p>Siparişinizin ulaşacağı kişi ve adres bilgileri.</p></div></div>
+          <div class="section-heading">
+            <span class="section-number">01</span>
+            <div>
+              <h2>Teslimat bilgileri</h2>
+              <p>Siparişinizin ulaşacağı kişi ve adres bilgileri.</p>
+            </div>
+          </div>
+
           <div class="delivery-fields">
-            <div class="field-group"><label for="checkout-name">Ad <span>*</span></label><input id="checkout-name" name="name" type="text" autocomplete="given-name" required></div>
-            <div class="field-group"><label for="checkout-surname">Soyad <span>*</span></label><input id="checkout-surname" name="surname" type="text" autocomplete="family-name" required></div>
-            <div class="field-group"><label for="checkout-phone">Telefon <span>*</span></label><input id="checkout-phone" name="phone" type="tel" autocomplete="tel" required></div>
-            <div class="field-group"><label for="checkout-email">E-posta <span>*</span></label><input id="checkout-email" name="email" type="email" autocomplete="email" required></div>
-            <div class="field-group"><label for="checkout-city">İl <span>*</span></label><input id="checkout-city" name="city" type="text" autocomplete="address-level1" required></div>
-            <div class="field-group"><label for="checkout-district">İlçe <span>*</span></label><input id="checkout-district" name="district" type="text" autocomplete="address-level2" required></div>
-            <div class="field-group field-wide"><label for="checkout-address">Açık adres <span>*</span></label><textarea id="checkout-address" name="address" rows="3" autocomplete="street-address" required></textarea></div>
-            <div class="field-group field-wide"><label for="checkout-note">Adres tarifi veya teslimat notu <small>(isteğe bağlı)</small></label><textarea id="checkout-note" name="addressNote" rows="2" placeholder="Örn. bina girişi veya teslimat için not"></textarea></div>
+            <!-- Ad / Soyad — aynı satırda -->
+            <div class="field-group">
+              <label for="checkout-name">Ad <span>*</span></label>
+              <input id="checkout-name" name="name" type="text" autocomplete="given-name" placeholder="Ahmet" required>
+            </div>
+            <div class="field-group">
+              <label for="checkout-surname">Soyad <span>*</span></label>
+              <input id="checkout-surname" name="surname" type="text" autocomplete="family-name" placeholder="Yılmaz" required>
+            </div>
+
+            <!-- Telefon / E-posta — aynı satırda -->
+            <div class="field-group">
+              <label for="checkout-phone">Telefon <span>*</span></label>
+              <input id="checkout-phone" name="phone" type="tel" autocomplete="tel" placeholder="0532 000 00 00" required>
+            </div>
+            <div class="field-group">
+              <label for="checkout-email">E-posta <span>*</span></label>
+              <input id="checkout-email" name="email" type="email" autocomplete="email" placeholder="ornek@mail.com" required>
+            </div>
+
+            <!-- İl / İlçe — aynı satırda -->
+            <div class="field-group">
+              <label for="checkout-city">İl <span>*</span></label>
+              <input id="checkout-city" name="city" type="text" autocomplete="address-level1" placeholder="İstanbul" required>
+            </div>
+            <div class="field-group">
+              <label for="checkout-district">İlçe <span>*</span></label>
+              <input id="checkout-district" name="district" type="text" autocomplete="address-level2" placeholder="Kadıköy" required>
+            </div>
+
+            <!-- Açık adres — tam satır -->
+            <div class="field-group field-wide">
+              <label for="checkout-address">Açık adres <span>*</span></label>
+              <textarea id="checkout-address" name="address" rows="3" autocomplete="street-address" placeholder="Mahalle, cadde/sokak, bina no, daire no..." required></textarea>
+            </div>
+            <div class="field-group field-wide">
+              <label for="checkout-note">Adres tarifi veya teslimat notu <small>(isteğe bağlı)</small></label>
+              <textarea id="checkout-note" name="addressNote" rows="2" placeholder="Örn. bina girişi sarı kapı, zil çalışmıyorsa arayın."></textarea>
+            </div>
           </div>
         </section>
 
+        <!-- ÖDEME KARTI -->
         <section class="checkout-section payment-section" id="payment">
-          <div class="section-heading"><span class="section-number">02</span><div><h2>Ödeme yöntemi</h2><p>Ödeme tercihinizi seçin. Bu demo gerçek tahsilat yapmaz.</p></div></div>
-          <div class="payment-options">
-            <label class="radio-option"><input type="radio" name="payment" value="Kredi kartı" checked><span class="payment-radio-mark" aria-hidden="true"></span><span class="payment-option-copy"><strong>Kredi / banka kartı</strong><small>Kart bilgileri bu örnek projede kaydedilmez.</small></span><span class="payment-tag">Kart</span></label>
-            <label class="radio-option"><input type="radio" name="payment" value="Kapıda ödeme"><span class="payment-radio-mark" aria-hidden="true"></span><span class="payment-option-copy"><strong>Kapıda ödeme</strong><small>Ödeme tercihiniz sipariş özetinde gösterilir.</small></span><span class="payment-tag">Teslimatta</span></label>
-          </div>
-          <div class="card-fields" data-card-fields>
-            <h3>Kart bilgileri</h3>
-            <div class="field-group field-wide"><label for="card-name">Kart üzerindeki ad soyad <span>*</span></label><input id="card-name" name="cardName" data-card-input type="text" autocomplete="cc-name" required></div>
-            <div class="field-group field-wide"><label for="card-number">Kart numarası <span>*</span></label><input id="card-number" name="cardNumber" data-card-number data-card-input type="text" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" required></div>
-            <div class="card-small-fields">
-              <div class="field-group"><label for="card-expiry">Son kullanma tarihi <span>*</span></label><input id="card-expiry" name="cardExpiry" data-card-expiry data-card-input type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="AA/YY" required></div>
-              <div class="field-group"><label for="card-cvv">Güvenlik kodu <span>*</span></label><input id="card-cvv" name="cardCvv" data-card-input type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="CVV" required></div>
+          <div class="section-heading">
+            <span class="section-number">02</span>
+            <div>
+              <h2>Ödeme yöntemi</h2>
+              <p>Ödeme tercihinizi seçin. Bu demo gerçek tahsilat yapmaz.</p>
             </div>
-            <p class="card-disclaimer">Kart bilgileri yalnızca form doğrulaması için kullanılır ve siparişle birlikte saklanmaz.</p>
+          </div>
+
+          <div class="payment-options">
+            <label class="radio-option">
+              <input type="radio" name="payment" value="Kredi kartı" checked>
+              <span class="payment-radio-mark" aria-hidden="true"></span>
+              <span class="payment-option-copy">
+                <strong>Kredi / banka kartı</strong>
+                <small>Kart bilgileri bu örnek projede kaydedilmez.</small>
+              </span>
+              <span class="payment-tag">Kart</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="payment" value="Kapıda ödeme">
+              <span class="payment-radio-mark" aria-hidden="true"></span>
+              <span class="payment-option-copy">
+                <strong>Kapıda ödeme</strong>
+                <small>Ödeme tercihiniz sipariş özetinde gösterilir.</small>
+              </span>
+              <span class="payment-tag">Teslimatta</span>
+            </label>
+          </div>
+
+          <!-- Kart alanları (kredi kartı seçilince görünür) -->
+          <div class="card-fields" data-card-fields>
+            <div class="card-fields-header">
+              <h3>Kart bilgileri</h3>
+              <span class="card-chip">GÜVENLİ</span>
+            </div>
+
+            <div class="field-group field-wide">
+              <label for="card-name">Kart üzerindeki ad soyad <span>*</span></label>
+              <input id="card-name" name="cardName" data-card-input type="text" autocomplete="cc-name" placeholder="AHMET YILMAZ" required>
+            </div>
+            <div class="field-group field-wide" style="margin-top:14px">
+              <label for="card-number">Kart numarası <span>*</span></label>
+              <input id="card-number" name="cardNumber" data-card-number data-card-input type="text" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="card-small-fields">
+              <div class="field-group">
+                <label for="card-expiry">Son kullanma tarihi <span>*</span></label>
+                <input id="card-expiry" name="cardExpiry" data-card-expiry data-card-input type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="AA/YY" required>
+              </div>
+              <div class="field-group">
+                <label for="card-cvv">Güvenlik kodu <span>*</span></label>
+                <input id="card-cvv" name="cardCvv" data-card-input type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="CVV" required>
+              </div>
+            </div>
+            <p class="card-disclaimer">🔒 Kart bilgileri yalnızca form doğrulaması için kullanılır ve siparişle birlikte saklanmaz.</p>
           </div>
         </section>
+
         <p class="form-message" data-checkout-message aria-live="polite"></p>
-        <button class="button checkout-submit" type="submit">Siparişi Onayla</button>
+        <button class="button checkout-submit" type="submit">Siparişi Onayla →</button>
       </form>
 
+      <!-- ── SAĞ: SİPARİŞ ÖZETİ ── -->
       <aside class="order-summary" aria-label="Sipariş özeti">
-        <p class="eyebrow">Sepetiniz</p><h2>Sipariş özeti</h2>
-        <div class="checkout-summary-list" data-checkout-items></div>
-        <div class="summary-totals"><p><span>Ürünler toplamı</span><strong data-checkout-subtotal></strong></p><p class="checkout-total" data-checkout-total></p></div>
-        <a class="summary-back-link" href="sepet.html">← Sepete geri dön</a>
-        <p class="summary-disclaimer">Bu eğitim projesinde ödeme işlemi gerçek banka tahsilatı yapmaz.</p>
+        <div class="order-summary-header">
+          <p class="eyebrow">Sepetiniz</p>
+          <h2>Sipariş özeti</h2>
+        </div>
+        <div class="order-summary-body">
+          <div class="checkout-summary-list" data-checkout-items></div>
+          <div class="summary-totals">
+            <p><span>Ürünler toplamı</span><strong data-checkout-subtotal></strong></p>
+            <p class="checkout-total" data-checkout-total></p>
+          </div>
+          <a class="summary-back-link" href="sepet.html">← Sepete geri dön</a>
+          <p class="summary-disclaimer">Bu eğitim projesinde ödeme işlemi gerçek banka tahsilatı yapmaz.</p>
+        </div>
       </aside>
+
     </div>
   </main>
+
   <footer class="site-footer">
     <div class="footer-main">
       <section class="footer-brand"><a class="footer-logo" href="index.html">BAŞ MOBİLYA</a><p>Doğal tonlar ve sade tasarımlarla eviniz için kullanışlı mobilyalar.</p></section>

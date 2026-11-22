@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,24 @@
     <nav class="main-nav" aria-label="Ana menü">
       <a href="index.html" aria-current="page">Ana Sayfa</a><a href="urunler.html">Ürünler</a><a href="hakkimizda.html">Hakkımızda</a><a href="iletisim.html">İletişim</a>
     </nav>
-    <div class="header-tools"><a class="account-link" href="giris.html">Giriş Yap</a><a class="settings-link" href="ayarlar.html">Ayarlar</a><a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a></div>
+    <div class="header-tools">
+      <div class="user-menu">
+        <a class="user-menu-btn" href="ayarlar.html" aria-label="Hesap Menüsü">
+          <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Hesabım</span>
+          <span class="user-menu-arrow" aria-hidden="true">▼</span>
+        </a>
+        <div class="user-dropdown">
+          <a href="giris.html">Giriş Yap</a>
+          <a href="kayit.html">Kayıt Ol</a>
+          <div class="user-dropdown-divider" aria-hidden="true"></div>
+          <a href="ayarlar.html">Profil &amp; Ayarlar</a>
+          <a href="urunler.html?kategori=favorites">Favorilerim</a>
+          <a href="siparis.html">Sipariş Takibi</a>
+        </div>
+      </div>
+      <a class="cart-link" href="sepet.html">Sepet <span class="cart-count" data-cart-count>0</span></a>
+    </div>
   </header>
 
   <main>

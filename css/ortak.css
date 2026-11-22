@@ -60,12 +60,26 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
 .cart-link { justify-self: end; white-space: nowrap; }
 .cart-count { min-width: 25px; height: 25px; display: inline-flex; align-items: center; justify-content: center; margin-left: 5px; padding: 0 6px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); font-size: .78rem; }
 .main-nav a:focus-visible, .cart-link:focus-visible, .footer-column a:focus-visible, .logo:focus-visible { outline: 2px solid var(--button); outline-offset: 4px; }
-.header-tools { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 12px; }
+.header-tools { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 16px; }
 .header-tools a { color: var(--heading); font-size: .88rem; font-weight: 600; text-decoration: none; }
 .header-tools a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .header-tools a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
 .header-tools a:focus-visible { outline: 2px solid var(--button); outline-offset: 3px; }
 .header-tools .cart-link { justify-self: auto; }
+
+/* Kullanıcı / Hesap Menüsü ve Dropdown */
+.user-menu { position: relative; display: inline-block; }
+.user-menu-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; border-radius: 6px; color: var(--heading); font-size: .88rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color .15s ease, color .15s ease; border: 1px solid transparent; }
+.user-menu-btn:hover, .user-menu:hover .user-menu-btn, .user-menu.open .user-menu-btn { background: var(--surface); border-color: var(--line); text-decoration: none !important; }
+.user-icon { width: 17px; height: 17px; stroke: currentColor; flex-shrink: 0; }
+.user-menu-arrow { font-size: .6rem; transition: transform .2s ease; opacity: .7; }
+.user-menu:hover .user-menu-arrow, .user-menu.open .user-menu-arrow { transform: rotate(180deg); }
+.user-dropdown { position: absolute; top: calc(100% + 6px); right: 0; min-width: 200px; padding: 7px 0; background: var(--white); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px rgba(0,0,0,.12); display: none; flex-direction: column; z-index: 1000; animation: dropdownFade .18s ease-out; }
+@keyframes dropdownFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.user-menu:hover .user-dropdown, .user-menu.open .user-dropdown { display: flex; }
+.user-dropdown a { padding: 9px 16px; color: var(--heading); font-size: .86rem; font-weight: 500; text-decoration: none !important; display: flex; align-items: center; gap: 8px; transition: background-color .15s ease, color .15s ease; }
+.user-dropdown a:hover { background: var(--surface-soft); color: var(--button); }
+.user-dropdown-divider { height: 1px; background: var(--line); margin: 6px 0; }
 
 /* Ortak içerik, bağlantı ve form stilleri */
 .section, .page-content { width: min(1240px, 100%); margin: 0 auto; padding: 54px 32px; }

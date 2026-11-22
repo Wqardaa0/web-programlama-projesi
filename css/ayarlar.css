@@ -1,50 +1,616 @@
-/* Ayarlar sayfası görünüm tercihlerini ve ilgili kısayolları ayırır. */
-.settings-page { max-width: 1120px; padding-top: 44px; padding-bottom: 60px; }
-.settings-heading { min-height: 160px; display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-bottom: 30px; padding: 27px 34px; border-bottom: 1px solid var(--line); background: var(--surface); }
-.settings-heading .eyebrow { margin-bottom: 5px; }
-.settings-heading h1 { margin-bottom: 6px; font-size: clamp(2rem, 3vw, 2.7rem); }
-.settings-heading p:last-child { margin: 0; color: var(--muted); }
-.settings-mark { width: 84px; height: 84px; display: grid; place-items: center; flex: 0 0 84px; border: 1px solid var(--control-border); border-radius: 50%; color: var(--button); font-size: 1.1rem; font-weight: 800; letter-spacing: .09em; }
-.settings-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .7fr); gap: clamp(30px, 6vw, 76px); align-items: start; }
-.settings-main { min-width: 0; }
-.settings-card { padding: 26px 0 23px; border-bottom: 1px solid var(--line); }
-.settings-card-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 11px; }
-.settings-icon { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--control-border); border-radius: 50%; color: var(--heading); font-size: 1.4rem; }
-.settings-card-heading .eyebrow { margin-bottom: 2px; }
-.settings-card-heading h2 { margin: 0; font-size: 1.35rem; }
-.settings-description { max-width: 650px; margin: 0 0 20px 56px; color: var(--muted); }
-.theme-choice { min-height: 86px; display: flex; align-items: center; gap: 16px; margin-left: 56px; padding: 14px 17px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
-.theme-preview { width: 68px; height: 46px; display: flex; flex: 0 0 68px; overflow: hidden; border: 1px solid var(--control-border); border-radius: 3px; background: #F7F3EB; }
+/* Hesabım ve Ayarlar sayfası: Kullanıcı profili, adresler, bildirimler ve tema ayarları */
+
+.profile-page {
+  max-width: 1240px;
+  padding-top: 36px;
+  padding-bottom: 70px;
+}
+
+/* ── ÜST PROFİL KARTI (HERO HEADER) ── */
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px 36px;
+  margin-bottom: 36px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 14px rgba(0,0,0,.04);
+}
+
+.profile-avatar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.profile-avatar {
+  width: 76px;
+  height: 76px;
+  flex: 0 0 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--button);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  box-shadow: 0 4px 18px rgba(121,92,70,.32);
+}
+
+.profile-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.user-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: var(--surface-soft);
+  color: var(--success);
+  border: 1px solid var(--control-border);
+}
+
+.plan-standard {
+  background: var(--heading);
+  color: #fff;
+}
+
+.profile-user-info h1 {
+  margin: 0 0 4px;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.profile-email-lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+/* İstatistik Kutucukları */
+.profile-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stat-box {
+  min-width: 95px;
+  padding: 14px 18px;
+  text-align: center;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--button);
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+
+.stat-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* ── 2 SÜTUNLU YERLEŞİM ── */
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, .75fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.profile-main-content {
+  display: grid;
+  gap: 28px;
+}
+
+/* ── AYAR BLOKLARI (KARTLAR) ── */
+.setting-block {
+  padding: 28px 32px;
+  border-radius: 10px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 8px rgba(0,0,0,.04);
+}
+
+.setting-block-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.setting-icon-box {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-soft);
+  border: 1px solid var(--control-border);
+  font-size: 1.25rem;
+}
+
+.setting-block-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.setting-desc {
+  margin: 0 0 20px 60px;
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+
+/* Form Alanları */
+.setting-form {
+  margin-left: 60px;
+  display: grid;
+  gap: 16px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  color: var(--heading);
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.field-group label span {
+  color: var(--button);
+}
+
+.field-group input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--control-border);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text);
+  font: inherit;
+  font-size: .93rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.field-group input:focus {
+  outline: none;
+  border-color: var(--button);
+  box-shadow: 0 0 0 3px rgba(121,92,70,.15);
+}
+
+.setting-actions {
+  margin-top: 8px;
+}
+
+.setting-actions .button {
+  min-height: 44px;
+  padding: 10px 24px;
+  font-size: .92rem;
+}
+
+/* ── ADRES KARTI ── */
+.address-card {
+  margin-left: 60px;
+  padding: 20px 22px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.address-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.address-card-header strong {
+  font-size: .98rem;
+  color: var(--heading);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.default-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: var(--button);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.btn-text-small {
+  background: transparent;
+  border: none;
+  color: var(--button);
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+}
+
+.btn-text-small:hover {
+  color: var(--heading);
+}
+
+.address-person {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 600;
+}
+
+.address-text {
+  margin: 0;
+  color: var(--heading);
+  font-size: .92rem;
+  line-height: 1.5;
+}
+
+/* ── TEMA SEÇİMİ ── */
+.theme-choice {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 60px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.theme-preview {
+  width: 64px;
+  height: 42px;
+  display: flex;
+  flex: 0 0 64px;
+  overflow: hidden;
+  border: 1px solid var(--control-border);
+  border-radius: 4px;
+  background: #F7F3EB;
+}
+
 .theme-preview span:nth-child(1) { width: 32%; background: #49372B; }
 .theme-preview span:nth-child(2) { width: 25%; background: #795C46; }
 .theme-preview span:nth-child(3) { width: 23%; background: #E8DDCC; }
 .theme-preview span:nth-child(4) { flex: 1; background: #F7F3EB; }
-.theme-choice-copy { display: grid; flex: 1; gap: 2px; }
-.theme-choice-copy strong { color: var(--heading); }
-.theme-choice-copy small { color: var(--muted); font-size: .82rem; }
-.theme-switch { position: relative; width: 48px; height: 28px; flex: 0 0 48px; cursor: pointer; }
-.theme-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.switch-track { position: absolute; inset: 0; border: 1px solid var(--control-border); border-radius: 20px; background: var(--page-bg); transition: background-color .16s ease; }
-.switch-track::after { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--button); content: ""; transition: transform .16s ease; }
-.theme-switch input:checked + .switch-track { background: var(--heading); }
-.theme-switch input:checked + .switch-track::after { transform: translateX(20px); background: var(--page-bg); }
-.theme-switch input:focus-visible + .switch-track { outline: 2px solid var(--heading); outline-offset: 3px; }
-.theme-status { min-height: 1.4em; margin: 10px 0 0 56px; color: var(--muted); font-size: .84rem; }
-.settings-note { display: grid; grid-template-columns: 42px 1fr; gap: 14px; padding: 24px 0; }
-.settings-note-number { color: var(--button); font-size: .82rem; font-weight: 700; letter-spacing: .08em; }
-.settings-note h2 { margin: 0 0 5px; font-size: 1.12rem; }
-.settings-note p { max-width: 650px; margin: 0; color: var(--muted); font-size: .93rem; }
-.settings-links { padding: 23px 22px; border-top: 3px solid var(--button); background: var(--surface); }
-.settings-links .eyebrow { margin-bottom: 4px; }
-.settings-links h2 { margin: 0 0 5px; font-size: 1.32rem; }
-.settings-links > p:not(.eyebrow) { margin: 0 0 13px; color: var(--muted); font-size: .9rem; }
-.settings-links a { min-height: 61px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; border-top: 1px solid var(--line); color: var(--heading); text-decoration: none; }
-.settings-links a > span:first-child { display: grid; gap: 1px; }
-.settings-links a small { color: var(--muted); font-size: .73rem; }
-.settings-links a strong { font-size: .92rem; }
-.settings-links a > span:last-child { color: var(--button); font-size: 1.25rem; transition: transform .15s ease; }
-.settings-links a:hover > span:last-child { transform: translateX(3px); }
-.settings-links a:focus-visible { outline: 2px solid var(--button); outline-offset: 2px; }
-.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-@media (max-width: 760px) { .settings-page { padding-top: 28px; } .settings-heading { min-height: 135px; padding: 23px 21px; } .settings-mark { width: 64px; height: 64px; flex-basis: 64px; } .settings-layout { grid-template-columns: 1fr; gap: 25px; } .settings-links { padding: 21px; } }
-@media (max-width: 480px) { .settings-heading { gap: 10px; } .settings-mark { width: 52px; height: 52px; flex-basis: 52px; font-size: .9rem; } .settings-description, .theme-choice, .theme-status { margin-left: 0; } .theme-choice { gap: 10px; padding: 12px 10px; } .theme-preview { width: 50px; flex-basis: 50px; height: 38px; } .theme-choice-copy small { max-width: 150px; line-height: 1.35; } .settings-card-heading { margin-bottom: 13px; } }
+
+.theme-choice-copy {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+}
+
+.theme-choice-copy strong {
+  color: var(--heading);
+  font-size: .95rem;
+}
+
+.theme-choice-copy small {
+  color: var(--muted);
+  font-size: .82rem;
+}
+
+/* Toggle Switch */
+.theme-switch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  flex: 0 0 48px;
+  cursor: pointer;
+}
+
+.theme-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch-track {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--control-border);
+  border-radius: 20px;
+  background: var(--white);
+  transition: background-color .2s ease;
+}
+
+.switch-track::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--button);
+  content: "";
+  transition: transform .2s ease;
+}
+
+.theme-switch input:checked + .switch-track {
+  background: var(--heading);
+}
+
+.theme-switch input:checked + .switch-track::after {
+  transform: translateX(20px);
+  background: var(--page-bg);
+}
+
+.theme-switch input:focus-visible + .switch-track {
+  outline: 2px solid var(--heading);
+  outline-offset: 3px;
+}
+
+.theme-status {
+  min-height: 1.4em;
+  margin: 10px 0 0 60px;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+/* ── BİLDİRİM TERCİHLERİ ── */
+.notification-options {
+  margin-left: 60px;
+  display: grid;
+  gap: 14px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.toggle-copy strong {
+  display: block;
+  color: var(--heading);
+  font-size: .92rem;
+  margin-bottom: 2px;
+}
+
+.toggle-copy small {
+  display: block;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+/* ── SAĞ KENAR ÇUBUĞU (SIDEBAR) ── */
+.profile-sidebar {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 24px;
+}
+
+.sidebar-card {
+  padding: 24px;
+  border-radius: 10px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 8px rgba(0,0,0,.04);
+}
+
+.sidebar-card .eyebrow {
+  margin-bottom: 2px;
+}
+
+.sidebar-card h3 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+
+/* Son Sipariş Kartı */
+.last-order-card {
+  border-top: 4px solid var(--button);
+}
+
+.order-mini-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.status-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 3px rgba(53,93,54,.2);
+}
+
+.order-mini-desc {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+
+/* Hızlı Menü Bağlantıları */
+.profile-nav-links {
+  display: grid;
+  gap: 2px;
+}
+
+.profile-nav-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--heading);
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: color .15s ease;
+}
+
+.profile-nav-links a:hover {
+  color: var(--button);
+}
+
+.profile-nav-links a strong {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--button);
+  font-size: .78rem;
+}
+
+.logout-wrap {
+  margin-top: 18px;
+  padding-top: 14px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  border: 1.5px dashed var(--error);
+  border-radius: 6px;
+  color: var(--error);
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.logout-btn:hover {
+  background: var(--error);
+  color: #fff;
+}
+
+/* Yardım Kartı */
+.sidebar-help-card {
+  padding: 20px 22px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.sidebar-help-card h4 {
+  margin: 0 0 6px;
+  font-size: .98rem;
+  color: var(--heading);
+}
+
+.sidebar-help-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .profile-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .profile-page {
+    padding-top: 24px;
+  }
+  .profile-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .profile-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+  }
+  .setting-block {
+    padding: 22px 18px;
+  }
+  .setting-desc,
+  .setting-form,
+  .address-card,
+  .theme-choice,
+  .theme-status,
+  .notification-options {
+    margin-left: 0;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

@@ -736,4 +736,159 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.replace("index.html");
     }
   }
+
+  // ── KULLANICI / HESAP MENÜSÜ AÇILIR PANELİ (DROPDOWN) ──
+  const userMenuBtn = document.querySelector(".user-menu-btn");
+  const userMenu = document.querySelector(".user-menu");
+  if (userMenuBtn && userMenu) {
+    userMenuBtn.addEventListener("click", (event) => {
+      // Mobilde veya dokunmatik cihazlarda tıklayınca menüyü aç/kapat
+      if (window.innerWidth <= 768) {
+        event.preventDefault();
+        userMenu.classList.toggle("open");
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!userMenu.contains(event.target)) {
+        userMenu.classList.remove("open");
+      }
+    });
+  }
+
+  // ── HESAP & AYARLAR SAYFASI YÖNETİMİ (ayarlar.html) ──
+  const profileInfoForm = document.getElementById("profile-info-form");
+  if (profileInfoForm) {
+    const profileStorageKey = "basMobilyaUserProfile";
+    const nameInput = document.getElementById("prof-name");
+    const surnameInput = document.getElementById("prof-surname");
+    const emailInput = document.getElementById("prof-email");
+    const phoneInput = document.getElementById("prof-phone");
+    const displayName = document.getElementById("profile-display-name");
+    const displayEmail = document.getElementById("profile-display-email");
+    const avatar = document.getElementById("profile-avatar");
+
+    // Kayıtlı profil verisi varsa formu doldur
+    try {
+      const savedProfile = JSON.parse(localStorage.getItem(profileStorageKey));
+      if (savedProfile) {
+        if (nameInput && savedProfile.name) nameInput.value = savedProfile.name;
+        if (surnameInput && savedProfile.surname) surnameInput.value = savedProfile.surname;
+        if (emailInput && savedProfile.email) emailInput.value = savedProfile.email;
+        if (phoneInput && savedProfile.phone) phoneInput.value = savedProfile.phone;
+
+        const fullName = `${savedProfile.name || "Ahmet"} ${savedProfile.surname || "Yılmaz"}`.trim();
+        if (displayName) displayName.textContent = fullName;
+        if (displayEmail && savedProfile.email) displayEmail.textContent = savedProfile.email;
+        if (avatar) {
+          const initials = `${(savedProfile.name || "A")[0]}${(savedProfile.surname || "Y")[0]}`.toUpperCase();
+          avatar.textContent = initials;
+        }
+      }
+    } catch (e) {
+      /* Varsayılan değerler kullanılır */
+    }
+
+    profileInfoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const updatedProfile = {
+        name: nameInput.value.trim(),
+        surname: surnameInput.value.trim(),
+        email: emailInput.value.trim(),
+        phone: phoneInput.value.trim()
+      };
+      localStorage.setItem(profileStorageKey, JSON.stringify(updatedProfile));
+      const fullName = `${updatedProfile.name} ${updatedProfile.surname}`.trim();
+      if (displayName) displayName.textContent = fullName;
+      if (displayEmail) displayEmail.textContent = updatedProfile.email;
+      if (avatar) {
+        const initials = `${(updatedProfile.name || "A")[0]}${(updatedProfile.surname || "Y")[0]}`.toUpperCase();
+        avatar.textContent = initials;
+      }
+      showToast("Kişisel bilgileriniz başarıyla güncellendi!", "✓");
+    });
+
+    // Şifre değiştirme formu
+    const passwordForm = document.getElementById("password-change-form");
+    if (passwordForm) {
+      passwordForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const newPass = document.getElementById("new-pass").value;
+        const newPassAgain = document.getElementById("new-pass-again").value;
+        if (newPass.length < 8) {
+          showToast("Yeni şifre en az 8 karakter olmalıdır.", "!");
+          return;
+        }
+        if (newPass !== newPassAgain) {
+          showToast("Girdiğiniz yeni şifreler eşleşmiyor.", "!");
+          return;
+        }
+        showToast("Şifreniz başarıyla güncellendi!", "✓");
+        passwordForm.reset();
+      });
+    }
+
+    // Bildirim tercihleri
+    document.querySelectorAll("#pref-email-notify, #pref-sms-notify").forEach((toggle) => {
+      toggle.addEventListener("change", () => {
+        showToast("İletişim ve bildirim tercihleriniz kaydedildi.", "✓");
+      });
+    });
+
+    // Adres düzenleme butonu
+    const btnEditAddress = document.getElementById("btn-edit-address");
+    if (btnEditAddress) {
+      btnEditAddress.addEventListener("click", () => {
+        const currentAddress = document.getElementById("address-display-text")?.textContent || "";
+        const newAddress = window.prompt("Yeni teslimat adresinizi girin:", currentAddress);
+        if (newAddress && newAddress.trim()) {
+          const displayText = document.getElementById("address-display-text");
+          if (displayText) displayText.textContent = newAddress.trim();
+          showToast("Teslimat adresiniz güncellendi!", "✓");
+        }
+      });
+    }
+
+    // Son sipariş durumu göstergesi
+    const orderCountEl = document.getElementById("profile-orders-count");
+    const sidebarOrderContent = document.getElementById("sidebar-order-content");
+    try {
+      const rawOrder = localStorage.getItem(orderStorageKey) || localStorage.getItem("luneraLastOrder");
+      const lastOrder = rawOrder ? JSON.parse(rawOrder) : null;
+      if (lastOrder && lastOrder.items && lastOrder.items.length > 0) {
+        if (orderCountEl) orderCountEl.textContent = "1";
+        if (sidebarOrderContent) {
+          sidebarOrderContent.innerHTML = `
+            <div class="order-mini-status">
+              <span class="status-indicator"></span>
+              <strong>Sipariş Hazırlanıyor</strong>
+            </div>
+            <p class="order-mini-desc">${lastOrder.date || "Yakın zamanda"} · ${money.format(lastOrder.total || 0)} tutarında siparişiniz bulunmaktadır.</p>
+            <a class="text-link" href="siparis.html">Sipariş detayını incele →</a>
+          `;
+        }
+      } else {
+        if (orderCountEl) orderCountEl.textContent = "0";
+        if (sidebarOrderContent) {
+          sidebarOrderContent.innerHTML = `
+            <p class="order-mini-desc">Henüz tamamlanmış bir siparişiniz bulunmamaktadır.</p>
+            <a class="text-link" href="urunler.html">Alışverişe başla →</a>
+          `;
+        }
+      }
+    } catch (e) {
+      /* Hata durumunda varsayılan gösterim kalır */
+    }
+
+    // Oturumu kapat butonu
+    const btnLogout = document.getElementById("btn-logout");
+    if (btnLogout) {
+      btnLogout.addEventListener("click", () => {
+        showToast("Oturumunuz kapatıldı. Ziyaretçi olarak devam ediyorsunuz.", "ℹ");
+        window.setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1200);
+      });
+    }
+  }
 });

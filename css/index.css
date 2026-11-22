@@ -309,8 +309,8 @@
 
 /* ── ALT BANNER (home-note) ── */
 .home-note {
-  margin: 60px clamp(16px, 4vw, 48px) 64px;
   max-width: 1240px;
+  margin: 60px auto 64px;
   padding: 40px 48px;
   display: flex;
   align-items: center;

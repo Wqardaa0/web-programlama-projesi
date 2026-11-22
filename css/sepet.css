@@ -3,14 +3,16 @@
 .cart-heading { display: grid; grid-template-columns: minmax(250px, 1fr) auto; align-items: end; gap: 28px; margin-bottom: 30px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 .cart-heading-copy h1 { margin-bottom: 5px; font-size: clamp(2.1rem, 4vw, 3rem); }
 .cart-heading-copy > p:last-child { margin: 0; color: var(--muted); }
-.checkout-progress ol { margin: 0; padding: 0; display: flex; align-items: center; list-style: none; }
-.checkout-progress li { display: flex; align-items: center; }
-.checkout-progress li:not(:last-child)::after { width: 32px; height: 1px; margin: 0 9px; background: var(--line); content: ""; }
-.checkout-progress a { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: .86rem; text-decoration: none; white-space: nowrap; }
-.checkout-progress a span { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--heading); font-size: .73rem; }
+
+/* Progress bar — odeme.html ile aynı yuvarlak stil */
+.checkout-progress ol { margin: 0; padding: 0; display: flex; align-items: center; list-style: none; gap: 0; }
+.checkout-progress li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .84rem; }
+.checkout-progress li:not(:last-child)::after { content: ""; display: block; width: clamp(20px, 4vw, 56px); height: 2px; margin: 0 12px; background: var(--line); border-radius: 1px; }
+.checkout-progress a { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; white-space: nowrap; }
+.checkout-progress a span { width: 34px; height: 34px; display: inline-grid; place-items: center; border: 2px solid var(--line); border-radius: 50%; color: var(--muted); font-size: .76rem; font-weight: 700; transition: border-color .2s, background .2s; }
 .checkout-progress a[aria-disabled="true"] { cursor: not-allowed; opacity: .52; }
-.checkout-progress .current a { color: var(--heading); font-weight: 700; }
-.checkout-progress .current a span { border-color: var(--button); background: var(--button); color: white; }
+.checkout-progress .current { color: var(--heading); font-weight: 700; }
+.checkout-progress .current a span { border-color: var(--button); background: var(--button); color: white; box-shadow: 0 0 0 4px rgba(121,92,70,.18); }
 .cart-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 44px; align-items: start; }
 .cart-list-panel { min-width: 0; }
 .cart-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 0 13px; border-bottom: 1px solid var(--line); }
@@ -39,8 +41,7 @@
 .summary-note { margin: 0 0 18px; color: var(--muted); font-size: .82rem; }
 .cart-actions { display: grid; gap: 10px; }
 .cart-actions .button { width: 100%; min-height: 48px; }
-.cart-actions .button-light { border: 1px solid var(--button); background: transparent; color: var(--heading); }
-.cart-actions .button-light:hover { background: var(--page-bg); }
+/* Not: .button-light ortak.css içinde tanımlıdır */
 .empty-cart { margin-top: 18px; padding: 58px 24px; border: 1px dashed var(--line); border-radius: 7px; background: transparent; text-align: center; }
 .empty-cart-icon { width: 54px; height: 54px; margin: 0 auto 16px; display: grid; place-items: center; color: var(--button); }
 .empty-cart-icon svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }

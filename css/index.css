@@ -316,7 +316,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  background: var(--heading);
+  background: var(--footer-bg);
   border-radius: 10px;
   color: var(--footer-text);
 }

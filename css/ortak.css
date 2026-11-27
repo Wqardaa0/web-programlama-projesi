@@ -40,9 +40,9 @@
 }
 
 * { box-sizing: border-box; }
-html { min-width: 320px; scroll-behavior: smooth; overflow-x: hidden; }
-body { min-height: 100vh; margin: 0; display: flex; flex-direction: column; background: var(--page-bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
-body > main { width: 100%; flex: 1; overflow-x: hidden; }
+html { width: 100%; max-width: 100%; min-width: 320px; scroll-behavior: smooth; overflow-x: hidden; }
+body { width: 100%; max-width: 100%; min-height: 100vh; margin: 0; display: flex; flex-direction: column; background: var(--page-bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body > main { width: 100%; max-width: 100%; min-width: 0; flex: 1; overflow-x: hidden; }
 img { max-width: 100%; height: auto; }
 a { color: inherit; }
 h1, h2, h3 { color: var(--heading); line-height: 1.25; }

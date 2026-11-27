@@ -30,7 +30,7 @@
 .catalog-products .product-info { padding: 15px 16px 17px; }
 .catalog-products .product-info h3 { font-size: 1rem; }
 @media (max-width: 900px) {
-  .catalog-layout { grid-template-columns: 1fr; gap: 22px; }
+  .catalog-layout { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .category-panel { position: static; padding: 14px 0 15px; }
   .filter-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .filter-button { text-align: center; }
@@ -41,10 +41,10 @@
   .page-intro > p { display: block; width: 100%; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
   .filter-list { width: 100%; max-width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-button { width: 100%; max-width: 100%; min-width: 0; padding-inline: 6px; text-align: center; white-space: normal; overflow-wrap: anywhere; }
-  .catalog-toolbar { min-width: 0; padding: 12px; }
-  .search-box { min-width: 0; width: 100%; }
-  .sort-box { max-width: 100%; flex-wrap: wrap; }
-  .sort-box select { max-width: 100%; }
+  .catalog-toolbar { min-width: 0; padding: 12px; gap: 10px; }
+  .search-box { flex: 1 1 100%; min-width: 0; width: 100%; }
+  .sort-box { width: 100%; max-width: 100%; flex-wrap: wrap; }
+  .sort-box select { flex: 1; min-width: 0; max-width: 100%; }
   .product-count-badge { white-space: normal; }
   .catalog-products .product-grid { grid-template-columns: 1fr; }
   .catalog-products .product-card img { min-height: 0; height: 218px; }

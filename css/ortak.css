@@ -173,6 +173,7 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
   .site-header { width: 100%; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 13px 17px 10px; gap: 8px 14px; }
   .logo { font-size: 1rem; }
   .header-tools { grid-column: 1 / -1; grid-row: 2; justify-self: start; gap: 16px; }
+  .user-dropdown { left: 0; right: auto; }
   .main-nav { width: 100%; min-width: 0; grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; gap: 2px 12px; text-align: left; }
   .main-nav a { min-width: 0; padding: 6px 0; font-size: .9rem; overflow-wrap: anywhere; }
   .section, .page-content { padding: 40px 18px; }
@@ -208,6 +209,12 @@ h2 { margin: 0 0 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); letter-spacing: -.
 /* Scroll Reveal Animasyonu */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 600px) {
+  .toast-container { left: 16px; right: 16px; bottom: 16px; }
+  .toast { min-width: 0; max-width: none; width: 100%; }
+  .scroll-top-btn { bottom: 16px; left: 16px; width: 40px; height: 40px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -372,8 +372,8 @@
 }
 
 @media (max-width: 600px) {
-  .hero { width: 100%; max-width: 100vw; min-height: 85vh; }
-  .hero-copy { width: calc(100vw - 36px); max-width: calc(100vw - 36px); min-width: 0; padding: 30px 18px 36px; }
+  .hero { width: 100%; max-width: 100%; min-height: 85vh; }
+  .hero-copy { width: 100%; max-width: 100%; min-width: 0; padding: 30px 18px 36px; }
   .hero-copy h1 { font-size: 2.4rem; overflow-wrap: anywhere; }
   .hero-copy > p:not(.eyebrow) { display: block; width: 100%; max-width: 100%; white-space: normal; font-size: .97rem; overflow-wrap: anywhere; }
   .hero-copy .button { max-width: 100%; padding-inline: 22px; }

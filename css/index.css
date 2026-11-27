@@ -319,6 +319,13 @@
   background: var(--footer-bg);
   border-radius: 10px;
   color: var(--footer-text);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+/* Koyu temada banner zıtlığını artır */
+:root[data-theme="dark"] .home-note {
+  background: #2d2520;
+  border-color: rgba(255,255,255,.08);
 }
 
 .home-note .eyebrow {

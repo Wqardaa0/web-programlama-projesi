@@ -1,5 +1,7 @@
 # BAŞ MOBİLYA — Web Programlama Projesi
 
+**Canlı Site:** [https://Wqardaa0.github.io/web-programlama-projesi/](https://Wqardaa0.github.io/web-programlama-projesi/)
+
 BAŞ MOBİLYA, temel HTML, CSS ve JavaScript ile hazırlanmış mobilya mağazası arayüzü projesidir. Ürünleri inceleme, kategorilere göre filtreleme, favorilere ekleme, sepet oluşturma ve örnek sipariş akışını deneme özellikleri bulunur.
 
 ## Ekran görüntüleri

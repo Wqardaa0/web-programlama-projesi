@@ -293,67 +293,7 @@ async function updateCurrencySummary(totalTry) {
   currencyBox.textContent = `Güncel kur karşılığı: ≈ $${usdTotal.toLocaleString("tr-TR")} USD · €${eurTotal.toLocaleString("tr-TR")} EUR`;
 }
 
-// 2) Açık API (TurkiyeAPI): Ödeme formunda 81 il ve ilçeyi otomatik önerir.
-async function initTurkeyLocations() {
-  const cityInput = document.getElementById("checkout-city");
-  const districtInput = document.getElementById("checkout-district");
-  const cityList = document.getElementById("city-options");
-  const districtList = document.getElementById("district-options");
-  const statusEl = document.querySelector("[data-location-status]");
-  if (!cityInput || !districtInput || !cityList || !districtList) return;
-
-  try {
-    if (statusEl) statusEl.textContent = "İl ve ilçe listesi yükleniyor...";
-    let provinces = [];
-    try {
-      const response = await fetch("https://turkiyeapi.dev/api/v1/provinces?fields=name,districts");
-      if (response.ok) {
-        const payload = await response.json();
-        if (Array.isArray(payload?.data)) provinces = payload.data;
-      }
-    } catch (e) {
-      /* Yedek il API'si denenir */
-    }
-
-    if (provinces.length === 0) {
-      const backupRes = await fetch("https://countriesnow.space/api/v0.1/countries/states/q?country=Turkey");
-      if (!backupRes.ok) throw new Error("Konum API yanıt vermedi");
-      const backupPayload = await backupRes.json();
-      const states = Array.isArray(backupPayload?.data?.states) ? backupPayload.data.states : [];
-      provinces = states.map((s) => ({
-        name: String(s.name || "").replace(/\s+Province$/i, "").trim(),
-        districts: []
-      })).filter((p) => p.name);
-      if (provinces.length === 0) throw new Error("İl listesi boş");
-    }
-
-    cityList.innerHTML = provinces.map((p) => `<option value="${p.name}"></option>`).join("");
-    const hasDistricts = provinces.some((p) => Array.isArray(p.districts) && p.districts.length > 0);
-    if (statusEl) {
-      statusEl.textContent = hasDistricts
-        ? "81 il ve ilçe listesi hazır (listeden seçebilir veya yazabilirsiniz)."
-        : "81 il listesi hazır (ilçeyi yazabilirsiniz).";
-    }
-
-    const updateDistricts = () => {
-      const selected = provinces.find((p) => p.name.toLocaleLowerCase("tr") === cityInput.value.trim().toLocaleLowerCase("tr"));
-      if (selected && Array.isArray(selected.districts) && selected.districts.length > 0) {
-        districtList.innerHTML = selected.districts.map((d) => `<option value="${d.name}"></option>`).join("");
-      } else {
-        districtList.innerHTML = "";
-      }
-    };
-    cityInput.addEventListener("input", updateDistricts);
-    cityInput.addEventListener("change", updateDistricts);
-  } catch (error) {
-    if (statusEl) {
-      statusEl.style.color = "var(--error)";
-      statusEl.textContent = "İl/ilçe listesi API'den yüklenemedi; şehir ve ilçeyi elle yazabilirsiniz.";
-    }
-  }
-}
-
-// 3) Açık API (Open-Meteo): İletişim sayfasında İstanbul showroom hava durumunu gösterir.
+// 2) Açık API (Open-Meteo): İletişim sayfasında İstanbul showroom hava durumunu gösterir.
 async function initShowroomWeather() {
   const weatherEl = document.querySelector("[data-showroom-weather]");
   if (!weatherEl) return;
@@ -1026,6 +966,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Açık API özelliklerini başlat
-  initTurkeyLocations();
   initShowroomWeather();
 });

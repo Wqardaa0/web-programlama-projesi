@@ -286,8 +286,13 @@
 
 .order-summary-header {
   padding: 20px 24px;
-  background: var(--heading);
+  background: var(--footer-bg);
   color: var(--footer-text);
+}
+
+:root[data-theme="dark"] .order-summary-header {
+  background: #2d2520;
+  border-bottom: 1px solid var(--line);
 }
 
 .order-summary-header .eyebrow { color: rgba(247,243,235,.55); margin-bottom: 2px; }

@@ -263,13 +263,24 @@ async function updateCurrencySummary(totalTry) {
   if (!currencyBox) return;
 
   if (!cachedCurrencyRates) {
-    try {
-      const response = await fetch("https://api.frankfurter.app/latest?from=TRY&to=USD,EUR");
-      if (!response.ok) throw new Error("Kur API yanıt vermedi");
-      const data = await response.json();
-      if (!data?.rates?.USD || !data?.rates?.EUR) throw new Error("Kur verisi eksik");
-      cachedCurrencyRates = data.rates;
-    } catch (error) {
+    const endpoints = [
+      "https://open.er-api.com/v6/latest/TRY",
+      "https://api.frankfurter.app/latest?from=TRY&to=USD,EUR"
+    ];
+    for (const url of endpoints) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) continue;
+        const data = await response.json();
+        if (data?.rates?.USD && data?.rates?.EUR) {
+          cachedCurrencyRates = data.rates;
+          break;
+        }
+      } catch (error) {
+        /* Yedek API denenir */
+      }
+    }
+    if (!cachedCurrencyRates) {
       currencyBox.classList.add("error");
       currencyBox.textContent = "Güncel döviz kuru şu an alınamadı (TL fiyatları geçerlidir).";
       return;

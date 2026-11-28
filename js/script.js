@@ -304,18 +304,40 @@ async function initTurkeyLocations() {
 
   try {
     if (statusEl) statusEl.textContent = "İl ve ilçe listesi yükleniyor...";
-    const response = await fetch("https://turkiyeapi.dev/api/v1/provinces?fields=name,districts");
-    if (!response.ok) throw new Error("Konum API yanıt vermedi");
-    const payload = await response.json();
-    const provinces = Array.isArray(payload?.data) ? payload.data : [];
-    if (provinces.length === 0) throw new Error("İl listesi boş");
+    let provinces = [];
+    try {
+      const response = await fetch("https://turkiyeapi.dev/api/v1/provinces?fields=name,districts");
+      if (response.ok) {
+        const payload = await response.json();
+        if (Array.isArray(payload?.data)) provinces = payload.data;
+      }
+    } catch (e) {
+      /* Yedek il API'si denenir */
+    }
+
+    if (provinces.length === 0) {
+      const backupRes = await fetch("https://countriesnow.space/api/v0.1/countries/states/q?country=Turkey");
+      if (!backupRes.ok) throw new Error("Konum API yanıt vermedi");
+      const backupPayload = await backupRes.json();
+      const states = Array.isArray(backupPayload?.data?.states) ? backupPayload.data.states : [];
+      provinces = states.map((s) => ({
+        name: String(s.name || "").replace(/\s+Province$/i, "").trim(),
+        districts: []
+      })).filter((p) => p.name);
+      if (provinces.length === 0) throw new Error("İl listesi boş");
+    }
 
     cityList.innerHTML = provinces.map((p) => `<option value="${p.name}"></option>`).join("");
-    if (statusEl) statusEl.textContent = "81 il ve ilçe listesi hazır (listeden seçebilir veya yazabilirsiniz).";
+    const hasDistricts = provinces.some((p) => Array.isArray(p.districts) && p.districts.length > 0);
+    if (statusEl) {
+      statusEl.textContent = hasDistricts
+        ? "81 il ve ilçe listesi hazır (listeden seçebilir veya yazabilirsiniz)."
+        : "81 il listesi hazır (ilçeyi yazabilirsiniz).";
+    }
 
     const updateDistricts = () => {
       const selected = provinces.find((p) => p.name.toLocaleLowerCase("tr") === cityInput.value.trim().toLocaleLowerCase("tr"));
-      if (selected && Array.isArray(selected.districts)) {
+      if (selected && Array.isArray(selected.districts) && selected.districts.length > 0) {
         districtList.innerHTML = selected.districts.map((d) => `<option value="${d.name}"></option>`).join("");
       } else {
         districtList.innerHTML = "";

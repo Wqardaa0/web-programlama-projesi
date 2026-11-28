@@ -253,6 +253,106 @@ function renderCart() {
   }).join("");
 
   summary.innerHTML = `<div class="summary-line"><span>Ürün ara toplamı (${itemCount} ürün)</span><strong>${money.format(total)}</strong></div><div class="cart-total-line"><span>Genel toplam</span><strong>${money.format(total)}</strong></div>`;
+  updateCurrencySummary(total);
+}
+
+// 1) Açık API (Frankfurter): Sepet toplamının güncel USD ve EUR karşılığını gösterir.
+let cachedCurrencyRates = null;
+async function updateCurrencySummary(totalTry) {
+  const currencyBox = document.querySelector("[data-currency-info]");
+  if (!currencyBox) return;
+
+  if (!cachedCurrencyRates) {
+    try {
+      const response = await fetch("https://api.frankfurter.app/latest?from=TRY&to=USD,EUR");
+      if (!response.ok) throw new Error("Kur API yanıt vermedi");
+      const data = await response.json();
+      if (!data?.rates?.USD || !data?.rates?.EUR) throw new Error("Kur verisi eksik");
+      cachedCurrencyRates = data.rates;
+    } catch (error) {
+      currencyBox.classList.add("error");
+      currencyBox.textContent = "Güncel döviz kuru şu an alınamadı (TL fiyatları geçerlidir).";
+      return;
+    }
+  }
+
+  currencyBox.classList.remove("error");
+  const usdTotal = Math.round(totalTry * cachedCurrencyRates.USD);
+  const eurTotal = Math.round(totalTry * cachedCurrencyRates.EUR);
+  currencyBox.textContent = `Güncel kur karşılığı: ≈ $${usdTotal.toLocaleString("tr-TR")} USD · €${eurTotal.toLocaleString("tr-TR")} EUR`;
+}
+
+// 2) Açık API (TurkiyeAPI): Ödeme formunda 81 il ve ilçeyi otomatik önerir.
+async function initTurkeyLocations() {
+  const cityInput = document.getElementById("checkout-city");
+  const districtInput = document.getElementById("checkout-district");
+  const cityList = document.getElementById("city-options");
+  const districtList = document.getElementById("district-options");
+  const statusEl = document.querySelector("[data-location-status]");
+  if (!cityInput || !districtInput || !cityList || !districtList) return;
+
+  try {
+    if (statusEl) statusEl.textContent = "İl ve ilçe listesi yükleniyor...";
+    const response = await fetch("https://turkiyeapi.dev/api/v1/provinces?fields=name,districts");
+    if (!response.ok) throw new Error("Konum API yanıt vermedi");
+    const payload = await response.json();
+    const provinces = Array.isArray(payload?.data) ? payload.data : [];
+    if (provinces.length === 0) throw new Error("İl listesi boş");
+
+    cityList.innerHTML = provinces.map((p) => `<option value="${p.name}"></option>`).join("");
+    if (statusEl) statusEl.textContent = "81 il ve ilçe listesi hazır (listeden seçebilir veya yazabilirsiniz).";
+
+    const updateDistricts = () => {
+      const selected = provinces.find((p) => p.name.toLocaleLowerCase("tr") === cityInput.value.trim().toLocaleLowerCase("tr"));
+      if (selected && Array.isArray(selected.districts)) {
+        districtList.innerHTML = selected.districts.map((d) => `<option value="${d.name}"></option>`).join("");
+      } else {
+        districtList.innerHTML = "";
+      }
+    };
+    cityInput.addEventListener("input", updateDistricts);
+    cityInput.addEventListener("change", updateDistricts);
+  } catch (error) {
+    if (statusEl) {
+      statusEl.style.color = "var(--error)";
+      statusEl.textContent = "İl/ilçe listesi API'den yüklenemedi; şehir ve ilçeyi elle yazabilirsiniz.";
+    }
+  }
+}
+
+// 3) Açık API (Open-Meteo): İletişim sayfasında İstanbul showroom hava durumunu gösterir.
+async function initShowroomWeather() {
+  const weatherEl = document.querySelector("[data-showroom-weather]");
+  if (!weatherEl) return;
+
+  const weatherLabels = {
+    0: "Açık",
+    1: "Az bulutlu",
+    2: "Parçalı bulutlu",
+    3: "Çok bulutlu",
+    45: "Sisli",
+    48: "Kırağılı sis",
+    51: "Hafif çiseleme",
+    61: "Hafif yağmurlu",
+    63: "Yağmurlu",
+    65: "Şiddetli yağmurlu",
+    71: "Karlı",
+    80: "Sağanak yağışlı",
+    95: "Fırtınalı"
+  };
+
+  try {
+    const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=41.01&longitude=28.98&current_weather=true");
+    if (!response.ok) throw new Error("Hava durumu API yanıt vermedi");
+    const data = await response.json();
+    const current = data?.current_weather;
+    if (!current || typeof current.temperature !== "number") throw new Error("Hava verisi eksik");
+    const label = weatherLabels[current.weathercode] || "Güncel";
+    weatherEl.textContent = `${Math.round(current.temperature)}°C · ${label} (Kadıköy)`;
+  } catch (error) {
+    weatherEl.style.color = "var(--error)";
+    weatherEl.textContent = "Hava durumu bilgisi şu an alınamadı.";
+  }
 }
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
@@ -891,4 +991,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+
+  // Açık API özelliklerini başlat
+  initTurkeyLocations();
+  initShowroomWeather();
 });

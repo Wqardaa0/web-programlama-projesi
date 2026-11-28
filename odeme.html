@@ -87,15 +87,18 @@
               <input id="checkout-email" name="email" type="email" autocomplete="email" placeholder="ornek@mail.com" required>
             </div>
 
-            <!-- İl / İlçe — aynı satırda -->
+            <!-- İl / İlçe — aynı satırda (API destekli liste + elle giriş) -->
             <div class="field-group">
               <label for="checkout-city">İl <span>*</span></label>
-              <input id="checkout-city" name="city" type="text" autocomplete="address-level1" placeholder="İstanbul" required>
+              <input id="checkout-city" name="city" type="text" list="city-options" autocomplete="address-level1" placeholder="İl seçin veya yazın" required>
+              <datalist id="city-options"></datalist>
             </div>
             <div class="field-group">
               <label for="checkout-district">İlçe <span>*</span></label>
-              <input id="checkout-district" name="district" type="text" autocomplete="address-level2" placeholder="Kadıköy" required>
+              <input id="checkout-district" name="district" type="text" list="district-options" autocomplete="address-level2" placeholder="İlçe seçin veya yazın" required>
+              <datalist id="district-options"></datalist>
             </div>
+            <p class="field-wide api-status" data-location-status aria-live="polite" style="margin:-4px 0 0;font-size:.78rem;color:var(--muted);"></p>
 
             <!-- Açık adres — tam satır -->
             <div class="field-group field-wide">
